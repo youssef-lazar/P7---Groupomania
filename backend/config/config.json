@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "youssef",
+    "password": "lazar71",
+    "database": "database_development_p7",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "youssef",
+    "password": "lazar71",
+    "database": "database_test_p7",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "youssef",
+    "password": "lazar71",
+    "database": "database_production_p7",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
