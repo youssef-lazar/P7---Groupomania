@@ -25,8 +25,8 @@ exports.signup = (req, res, next) => {
       let errors = isValid(req.body.email);
       if (errors.length > 0) {
         return res.status(400).json({
-            errors
-          });
+          errors
+        });
       } else {
 
         user.save()
@@ -114,4 +114,27 @@ exports.getAllUsers = (req, res, next) => {
       });
     }
   );
+};
+
+exports.deleteUser = (req, res, next) => {
+  req.model.User.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+    .then((user) => {
+      if (req.userId == req.params.id) {
+        user.destroy()
+          .then(() => res.status(200).json({
+            message: 'Utilisateur supprimé'
+          }))
+          .catch(error => res.status(400).json({
+            error
+          }));
+      } else {
+        res.status(400).json({
+          message: 'error'
+        })
+      }
+    })
 };
