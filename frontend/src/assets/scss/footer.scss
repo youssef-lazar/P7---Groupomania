@@ -1,0 +1,10 @@
+@mixin footer {
+    margin: 30px;
+    padding: 30px;
+    height: 150px;
+    display: flex;
+    justify-content: space-evenly;
+    color: orchid;
+    text-decoration: none;
+    flex-wrap: wrap;
+}
