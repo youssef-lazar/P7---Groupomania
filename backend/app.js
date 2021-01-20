@@ -2,6 +2,7 @@ const express = require('express');  // Useful to create Express applications
 const bodyParser = require('body-parser'); // Useful to transform requests body to JSON (ie usable JS objets)
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
+const path = require('path');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use((req, res, next) => {
     next();
 });
 // Middlewares applied to all routes
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(bodyParser.json());
 
 app.use('/api/posts', postRoutes);
