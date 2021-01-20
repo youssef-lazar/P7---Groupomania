@@ -16,7 +16,7 @@ const normalizePort = (val) => {
     }
     return false;
 };
-const port = normalizePort(process.env.PORT || '8080');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port); // Sets on which port the express app should run (the port 3000 by default OR the one specified by the environment if any)
 /*
 This function searches for various server errors and handle them appropriately
