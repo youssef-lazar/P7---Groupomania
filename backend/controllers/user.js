@@ -1,9 +1,8 @@
-const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 const validator = require('validator');
-
+const models = require('../models');
+require('dotenv').config();
 
 function isValid(email) {
   const errors = [];
@@ -14,6 +13,8 @@ function isValid(email) {
 }
 
 exports.signup = (req, res, next) => {
+
+  const User = models.User;
 
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
@@ -50,9 +51,9 @@ exports.signup = (req, res, next) => {
 
 exports.login = (req, res, next) => {
 
-  User.findOne({
-      email: req.body.email
-    })
+  const User = models.User;
+
+  User.findOne({where: {email: req.body.email}})
     .then(user => {
       if (!user) {
         return res.status(401).json({
@@ -88,6 +89,9 @@ exports.login = (req, res, next) => {
 
 
 exports.getOneUser = (req, res, next) => {
+
+  const User = models.User;
+
   User.findOne({
     _id: req.params.id
   }).then(
@@ -105,6 +109,9 @@ exports.getOneUser = (req, res, next) => {
 
 
 exports.getAllUsers = (req, res, next) => {
+
+  const User = models.User;
+
   User.find().then(
     (users) => {
       res.status(200).json(users);
@@ -119,7 +126,10 @@ exports.getAllUsers = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-  req.model.User.findOne({
+
+  const User = models.User;
+
+  User.findOne({
       where: {
         id: req.params.id
       }
