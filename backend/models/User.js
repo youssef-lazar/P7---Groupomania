@@ -22,10 +22,10 @@ module.exports = (sequelize, Datatypes) => {
             type: Datatypes.STRING,
             allowNull: false
         },
-        role: {
-            type: Datatypes.STRING,
+        isAdmin: {
+            type: Datatypes.INTEGER,
             allowNull: false,
-            defaultValue: "user"
+            defaultValue: "0"
         },
         firstName: {
             type: Datatypes.STRING,
