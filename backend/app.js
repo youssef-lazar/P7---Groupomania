@@ -1,12 +1,15 @@
 const express = require('express');  // Useful to create Express applications
 const bodyParser = require('body-parser'); // Useful to transform requests body to JSON (ie usable JS objets)
+const mysql = require('mysql');
+
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
+const path = require('path');
 
 const app = express();
 
-// Database connection
-const { sequelize } = require('./models/index');
+// Connexion à la base de données
+require("./dbConnection");
 
 // Configures specific response object headers to avoid CORS errors (middleware applied to all routes)
 app.use((req, res, next) => {
@@ -16,20 +19,11 @@ app.use((req, res, next) => {
     next();
 });
 // Middlewares applied to all routes
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(bodyParser.json());
 
 app.use('/api/posts', postRoutes);
-app.use('/api/auth', userRoutes);
+app.use('/api/user', userRoutes);
 
-// Test database connection
-const testDatabaseConnection = async function () {
-    try {
-        await sequelize.authenticate();
-        console.log('Connexion à la BDD réussie !');
-    } catch (error) {
-        console.error('Impossible de se connection à la BDD', error);
-    }
-};
-testDatabaseConnection();
 
 module.exports = app;
