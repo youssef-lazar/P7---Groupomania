@@ -1,7 +1,6 @@
 const express = require('express');  // Useful to create Express applications
 const bodyParser = require('body-parser'); // Useful to transform requests body to JSON (ie usable JS objets)
-const mysql = require('mysql');
-
+const model = require('./models/index');
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
 const path = require('path');
@@ -18,6 +17,12 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS'); // Allows to use these methods when accessing the resource in response to a preflight request
     next();
 });
+
+app.use(function (req, res, next) {
+   req.model = model;
+    next();
+});
+
 // Middlewares applied to all routes
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(bodyParser.json());
