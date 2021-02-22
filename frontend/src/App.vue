@@ -1,11 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home | </router-link> 
-      <router-link class="signup" to="/signup">Inscription | </router-link> 
-      <router-link class="login" to="/login">connexion</router-link>
-      
-    </div>
+   <NavBar/>
     <router-view />
 
     <footer id="footer">
@@ -15,6 +10,16 @@
 </template>
 
 <script>
+import NavBar from './components/NavBar';
+
+  
+   export default {
+    name: "home",
+    components: {
+      NavBar
+    },
+  };
+
 
 </script>
 

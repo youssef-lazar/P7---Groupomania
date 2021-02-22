@@ -1,5 +1,4 @@
 <template>
-
     <body id="LoginForm">
         <div class="container">
             <h1 class="form-heading">Connexion</h1>
@@ -57,9 +56,9 @@
                     })
                     .then((res) => {
                         
-                            sessionStorage.setItem("jwt", res.data.token);
-                            sessionStorage.setItem("userId", res.data.userId);
-                            sessionStorage.setItem("isAdmin", res.data.isAdmin);
+                            localStorage.setItem("jwt", res.data.token);
+                            localStorage.setItem("userId", res.data.userId);
+                            localStorage.setItem("isAdmin", res.data.isAdmin);
                             this.isError = false;
                             window.location.href = "/";
                     })
@@ -75,9 +74,11 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   @import  '../assets/scss/_mixins.scss';
-  .form {
-    margin:10px;  
-  }
+  #LoginForm {
+  margin: 2em auto;
+  max-width: 750px;
+}
+
   .button {
     @include button-connect;
   }

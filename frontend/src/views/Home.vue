@@ -1,19 +1,20 @@
 <template>
   <div class="home">
-    <img alt="groupomania logo" class="photo" src="../assets/icon-left-font.png" />
- 
-    <Posts msg="posts" />
-   
+    <PostForm msg="posts" />
+    <PostList/>
   </div>
 </template>
 
 <script>
-  // @ is an alias to /src
-  import Posts from "@/components/PostForm.vue";
+
+  import PostForm from "@/components/PostForm.vue";
+  import PostList from "@/components/PostList.vue";
+
   export default {
     name: "home",
     components: {
-      Posts,
+      PostForm,
+      PostList
     },
   };
 </script>

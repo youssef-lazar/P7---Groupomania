@@ -1,7 +1,6 @@
 <template>
   <div class="login">
-    <img class="photo" alt="Vue logo" src="../assets/icon-left-font.png" />
-    <Login msg="Bienvenue à Groupomania" />
+    <Login/>
   </div>
 </template>
 
