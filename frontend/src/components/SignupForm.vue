@@ -1,13 +1,21 @@
 <template>
 
     <body>
-        <div class="container">
+        <div class="container signup">
             <div class="row main">
                 <div class="panel-heading">
                 </div>
                 <div class="main-login main-center">
                     <form class="form-horizontal" @submit.prevent="signup" action="/api/user/signup" method="post">
-
+                        <b-input-group>
+                            <template #prepend> 
+                                <b-input-group-text>                               
+                            <i class="fa fa-user fa"
+                                            aria-hidden="true"></i>
+                                </b-input-group-text>
+                            </template>
+                            <b-form-input v-model="surname" placeholder="Votre nom"/>
+                        </b-input-group>                        
                         <div class="form">
                             <label for="surname" class="cols-sm-2 control-label">Votre Nom</label>
                             <div class="cols-sm-10">
@@ -105,15 +113,12 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   @import  '../assets/scss/_mixins.scss';
-  .form{
-    margin:10px;
-  }
-  #button{
-  @include button-connect;
-  }
-    @media screen and (max-width: 800px){
-    form{
-      width: auto;
-    }
-  }
+
+  .signup {
+  margin: auto;
+  max-width: 750px;
+  text-align: center;
+  margin-right: 130px;
+}
+
 </style>

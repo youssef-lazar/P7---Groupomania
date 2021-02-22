@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
+import MyProfil from '../views/MyProfil'
 
 
 
@@ -33,6 +34,11 @@ Vue.use(VueRouter)
     meta: {
       guest: true
     }
+  },
+    {
+    path: '/Profil',
+    name: 'Profil',
+    component: MyProfil,
   },
 
  

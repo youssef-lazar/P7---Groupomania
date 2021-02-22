@@ -69,9 +69,11 @@ exports.login = (req, res, next) => {
           }
           return res.status(200).json({
             userId: user.id,
+            isAdmin: user.isAdmin,
             token: jwt.sign({
                 userId: user.id
               },
+
               process.env.JWT, {
                 expiresIn: '24h'
               }
@@ -109,7 +111,7 @@ exports.getAllUsers = (req, res, next) => {
 
   const User = models.User;
 
-  User.find().then(
+  User.findAll().then(
     (users) => {
       res.status(200).json(users);
     }

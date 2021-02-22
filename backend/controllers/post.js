@@ -1,12 +1,13 @@
-const Post = require('../models/Post');
 const fs = require('fs');
+const models = require('../models');
 
 exports.createPost = (req, res, next) => {
-  const postObject = JSON.parse(req.body.post);
+
+  const postObject = req.body.post;
   delete postObject._id;
-  const post = new Post({
-    ...postObject,
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  const post  = new  models.Post({
+    ...postObject
+   // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   });
   post.save()
     .then(() => res.status(201).json({
@@ -19,6 +20,9 @@ exports.createPost = (req, res, next) => {
 
 
 exports.modifyPost = (req, res, next) => {
+
+  const Post = models.Post;
+
   const postObject = req.file ? {
     ...JSON.parse(req.body.post),
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
@@ -41,6 +45,9 @@ exports.modifyPost = (req, res, next) => {
 
 
 exports.deletePost = (req, res, next) => {
+
+  const Post = models.Post;
+
   Post.findOne({
       _id: req.params.id,
       userId: req.userId
@@ -68,6 +75,9 @@ exports.deletePost = (req, res, next) => {
 
 
 exports.getOnePost = (req, res, next) => {
+
+  const Post = models.Post;
+
   Post.findOne({
     _id: req.params.id
   }).then(
@@ -85,7 +95,10 @@ exports.getOnePost = (req, res, next) => {
 
 
 exports.getAllPosts = (req, res, next) => {
-  Post.find().then(
+
+  const Post = models.Post;
+
+  Post.findAll().then(
     (posts) => {
       res.status(200).json(posts);
     }
