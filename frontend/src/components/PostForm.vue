@@ -49,7 +49,7 @@
                 dataPost: {
                     text: "",
                     imageUrl: "",
-                    UserId: sessionStorage.userId
+                    UserId: localStorage.userId
                 },
                 dataPostS: "",
                 msg: false,
@@ -64,7 +64,7 @@
                 axios.post("http://localhost:3000/api/posts/", this.dataPostS, {
                         headers: {
                             'Content-Type': 'application/json',
-                            Authorization: 'Bearer ' + sessionStorage.getItem("jwt")
+                            Authorization: 'Bearer ' + localStorage.getItem("jwt")
                         }
                     })
                     .then(response => {

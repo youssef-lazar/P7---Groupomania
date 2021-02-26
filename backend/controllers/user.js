@@ -151,13 +151,16 @@ exports.deleteUser = (req, res, next) => {
 };
 
 exports.modifyUser = (req, res, next) => {
+
+  const User = models.User;
+
   const userObject = req.file ? {
     ...JSON.parse(req.body.user),
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   } : {
     ...req.body
   };
-  User.updateOne({
+  User.update({
       _id: req.params.id,
       userId: req.userId
     }, {
