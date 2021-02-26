@@ -29,7 +29,7 @@ exports.modifyPost = (req, res, next) => {
   } : {
     ...req.body
   };
-  Post.updateOne({
+  Post.update({
       _id: req.params.id,
       userId: req.userId
     }, {
