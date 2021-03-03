@@ -50,11 +50,11 @@
         methods: {
             getAllPosts: function () {
 
-                this.userId = localStorage.userId;
+                this.userId = sessionStorage.userId;
 
                 axios.get("http://localhost:3000/api/posts", {
                         headers: {
-                            Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                            Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
                         }
                     })
                     .then(response => {                      

@@ -56,9 +56,9 @@
                     })
                     .then((res) => {
                         
-                            localStorage.setItem("jwt", res.data.token);
-                            localStorage.setItem("userId", res.data.userId);
-                            localStorage.setItem("isAdmin", res.data.isAdmin);
+                            sessionStorage.setItem("jwt", res.data.token);
+                            sessionStorage.setItem("userId", res.data.userId);
+                            sessionStorage.setItem("isAdmin", res.data.isAdmin);
                             this.isError = false;
                             window.location.href = "/";
                     })
