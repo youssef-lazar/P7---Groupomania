@@ -58,7 +58,7 @@
         methods: {
             logout() {
                 location.replace(location.origin);
-                localStorage.clear();
+                sessionStorage.clear();
 
             },
         }
