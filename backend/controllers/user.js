@@ -53,7 +53,11 @@ exports.login = (req, res, next) => {
 
   const User = models.User;
 
-  User.findOne({where: {email: req.body.email}})
+  User.findOne({
+      where: {
+        email: req.body.email
+      }
+    })
     .then(user => {
       if (!user) {
         return res.status(401).json({
@@ -81,9 +85,12 @@ exports.login = (req, res, next) => {
           });
         })
         .catch(error => res.status(500).json({
-        error: error      }));
+          error: error
+        }));
     })
-    .catch(error => res.status(500).json({        error: error      }    ));
+    .catch(error => res.status(500).json({
+      error: error
+    }));
 };
 
 
@@ -160,16 +167,20 @@ exports.modifyUser = (req, res, next) => {
   } : {
     ...req.body
   };
-  User.update({
-      _id: req.params.id,
-      userId: req.userId
-    }, {
-      ...userObject
-    })
-    .then(() => res.status(200).json({
-      message: 'Profil modifié !'
-    }))
-    .catch(error => res.status(400).json({
-      error
-    }));
+
+  User.findOne({
+    where: {
+      id: req.params.id
+    }
+  }).then((user) => {
+    console.log(userObject);
+    user.firstName = userObject.user.firstName;
+    user.save()
+      .then(() => res.status(200).json({
+        user: user
+      }))
+      .catch(error => res.status(400).json({
+        error
+      }));
+  });
 };

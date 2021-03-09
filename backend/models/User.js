@@ -25,7 +25,7 @@ module.exports = (sequelize, Datatypes) => {
         isAdmin: {
             type: Datatypes.INTEGER,
             allowNull: false,
-            defaultValue: "0"
+            defaultValue: 0
         },
         firstName: {
             type: Datatypes.STRING,
