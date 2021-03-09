@@ -44,9 +44,11 @@
                 },
             }
         },
+        
         mounted(){
             this.getAllPosts()
         },
+
         methods: {
             getAllPosts: function () {
 

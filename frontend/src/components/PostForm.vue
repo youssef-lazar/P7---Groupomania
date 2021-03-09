@@ -22,7 +22,8 @@
                         <p>Ajouter une image</p>
                     </b-input-group-text>
                 </template>
-                <b-form-input v-model="dataPost.imageUrl" label="Ajout Image" />
+                <b-form-file v-model="dataPost.imageUrl" label="Ajout Image" />
+                <span v-if="selectedFile">Image sélectionnée : {{ selectedFile.name }}</span><br>
             </b-input-group>
         </div>
 
@@ -49,7 +50,8 @@
                 dataPost: {
                     text: "",
                     imageUrl: "",
-                    UserId: sessionStorage.userId
+                    UserId: sessionStorage.userId,
+                    selectedFile: null,
                 },
                 dataPostS: "",
                 msg: false,
