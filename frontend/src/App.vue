@@ -11,7 +11,6 @@
 
 <script>
 import NavBar from './components/NavBar';
-
   
    export default {
     name: "home",
@@ -19,10 +18,7 @@ import NavBar from './components/NavBar';
       NavBar
     },
   };
-
-
 </script>
 
 <style scoped lang="scss">
-
 </style>

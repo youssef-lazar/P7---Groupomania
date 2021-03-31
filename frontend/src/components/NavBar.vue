@@ -33,7 +33,7 @@
                     </a>
                 </li>
                 <li>
-                    <a style="color:red;" @click="logout()">
+                    <a style="color:red;" @click="logoutHandler">
                         Déconnexion
                     </a>
                 </li>
@@ -43,10 +43,15 @@
 </template>
 
 <script>
+
+import {mapActions, mapGetters} from 'vuex';
+
     export default {
         name: "Navbar",
 
         computed: {
+            ...mapGetters(['currentUser']),
+
             isAdmin() { // nous permet de savoir si l'utilisateur est un admin grâce aux infos présente dans le store
                 return this.$store.getters.isAdmin
             },
@@ -56,10 +61,10 @@
         },
 
         methods: {
-            logout() {
-                location.replace(location.origin);
-                sessionStorage.clear();
-
+            ...mapActions(['logout']),
+            logoutHandler() {
+            this.logout();
+              
             },
         }
 
