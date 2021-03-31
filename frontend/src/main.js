@@ -12,6 +12,7 @@ Vue.use(BootstrapVue);
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 
@@ -20,11 +21,12 @@ const axiosInstance = axios.create({
       Authorization: 'Bearer '+ sessionStorage.getItem('jwt'),
       'Content-Type': 'application/json'
   }
-});  
+});
 Vue.prototype.axios = axiosInstance
 
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount('#app')

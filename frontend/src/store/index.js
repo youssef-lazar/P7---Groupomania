@@ -1,44 +1,100 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import UserService from "../services/user";
+import PostService from "../services/post";
 
 
 // Store
 
 Vue.use(Vuex)
-const store = new Vuex.Store(
-  {
-    state:{
-      jwt: sessionStorage.getItem('jwt'),
-      authenticated: false,
-      currentUserId: null
+const store = new Vuex.Store({
+  
+  state: {
+    
+    // User
+
+    currentUser: JSON.parse(localStorage.getItem('currentUser')),
+
+  // Posts
+
+    posts: [],
+},
+
+  mutations: {
+
+    // User
+
+    removeCurrentUser(state){
+        localStorage.removeItem('currentUser');
+        state.currentUser = null;
     },
-    mutations:{
-      setAuthentication(state, {token,status, userId, isAdmin}) {
-        sessionStorage.setItem("jwt", token);
-        sessionStorage.setItem("userId",userId);
-        sessionStorage.setItem("isAdmin", isAdmin);
-        state.authenticated = status;
+    setAuthentication(state, {
+      token,
+      userId,
+      isAdmin
+    }) {
+      state.currentUser = {
+        token,
+        userId,
+        isAdmin
+      }
+      localStorage.setItem("currentUser", JSON.stringify(state.currentUser));
+    },
+
+    // posts
+    setPosts(state, posts) {
+    state.posts = posts
+    },
+
+  },
+  getters: {
+    currentUser(state) {
+      return state.currentUser;
+    }
+  },
+
+  actions: {
+
+    // User
+
+    logout({commit}){
+      commit('removeCurrentUser');
+    },
+
+    async login({
+      commit
+    }, {email, password}) {
+      const res = await UserService.login({
+        email,
+        password
+      });
+      commit('setAuthentication',res.data);
+    },
+
+    async signup({
+      commit
+    }, {firstName, surname, email, password}) {
+      const res = await UserService.signup({
+        firstName,
+        surname,
+        email,
+        password
+      });
+      commit('setAuthentication',res.data);
+    },
+
+    // Posts
+
+    async getAllPosts({ commit }) {
+      try{
+      const response = await PostService.getAllPosts({jwt: this.state.currentUser.token});
+        commit("setPosts", response.data);
+      }catch(error){
+        console.log(error.response);
       }
     },
 
-    actions:{
-      login({commit},email,password){
-         this.axios
-                    .post("http://localhost:3000/api/user/login", {
-                        email: email,
-                        password: password,
-                    })
-                    .then((res) => {
-                        commit('setAuthentication', {status: true, token: res.data.token, userId: res.data.UserId})
-                            return true;
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        return false;
-                    });
-      }
-    }
   }
-)
+})
 
 export default store

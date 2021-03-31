@@ -6,16 +6,7 @@
                 <div class="panel-heading">
                 </div>
                 <div class="main-login main-center">
-                    <form class="form-horizontal" @submit.prevent="signup" action="/api/user/signup" method="post">
-                        <b-input-group>
-                            <template #prepend> 
-                                <b-input-group-text>                               
-                            <i class="fa fa-user fa"
-                                            aria-hidden="true"></i>
-                                </b-input-group-text>
-                            </template>
-                            <b-form-input v-model="surname" placeholder="Votre nom"/>
-                        </b-input-group>                        
+                    <form class="form-horizontal" @submit.prevent="submitForm" action="/api/user/signup" method="post">                    
                         <div class="form">
                             <label for="surname" class="cols-sm-2 control-label">Votre Nom</label>
                             <div class="cols-sm-10">
@@ -75,6 +66,8 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
+
     export default {
         name: "Signup",
         data: function () {
@@ -87,24 +80,16 @@
         },
         props: {},
         methods: {
-            signup: function () {
-                this.axios
-                    .post("http://localhost:3000/api/user/signup", {
-                        firstName: this.firstName,
-                        surname: this.surname,
-                        email: this.email,
-                        password: this.password,
-                    })
-                    .then(() => {
-                       
+            ...mapActions(['signup']),
+
+             async submitForm() {
+                try {
+                     await this.signup({firstName:this.firstName, surname:this.surname, email:this.email, password:this.password});
                             alert("Votre compte a bien été créé, veuillez vous connecter");
-                            window.location.href = "http://localhost:8080/#/";
-                            // on est content
-    
-                    })
-                    .catch((err) => {
+                            this.$router.push('/')
+                }catch(err){                    
                         console.log(err);
-                    });
+                }
             },
         },
     };

@@ -7,7 +7,7 @@
                     <div class="panel">
                         <p>Veuillez renseigner votre email et votre mot de passe</p>
                     </div>
-                    <form @submit.prevent="login" id="Login">
+                    <form @submit.prevent="submitForm" id="Login">
 
                         <div class="form-group">
 
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
 
 
     export default {
@@ -49,25 +50,16 @@
         },
         props: {},
         methods: {
-            login: function () {
-               
-                this.axios
-                    .post("http://localhost:3000/api/user/login", {
-                        email: this.email,
-                        password: this.password,
-                    })
-                    .then((res) => {
-                        
-                            sessionStorage.setItem("jwt", res.data.token);
-                            sessionStorage.setItem("userId", res.data.userId);
-                            sessionStorage.setItem("isAdmin", res.data.isAdmin);
+            ...mapActions(['login']),
+
+             async submitForm() {
+                try {
+                     await this.login({email:this.email, password: this.password});
                             this.isError = false;
-                            window.location.href = "/";
-                    })
-                    .catch((err) => {
-                        console.log(err);
+                            this.$router.push('/')
+                }catch(err){                    
                         this.isError = true;
-                    });
+                }
             },
         },
     };

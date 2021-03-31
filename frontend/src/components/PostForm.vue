@@ -1,97 +1,76 @@
 <template>
-    <div id="formPost">
 
-        <h1 class="ml-12">Forum</h1>
-        <div class="ma-3 ml-12">
-            <div class="mb-3">
-                <h2>Nouveau post</h2>
-            </div>
+  <!-- card créer un post -->
+  <b-card tag="article" class="col-md-5 mx-auto mt-4 container shadow">
 
-            <b-input-group>
-                <template #prepend>
-                    <b-input-group-text>
-                        <p>Votre Message</p>
-                    </b-input-group-text>
-                </template>
-                <b-form-input v-model="dataPost.text" label="Message" required />
-            </b-input-group>
+    <!-- formulaire pour créer le post -->
+    <b-form method="POST" @submit.prevent = "createPost" enctype = " multipart / form-data ">
 
-            <b-input-group>
-                <template #prepend>
-                    <b-input-group-text>
-                        <p>Ajouter une image</p>
-                    </b-input-group-text>
-                </template>
-                <b-form-file v-model="dataPost.imageUrl" label="Ajout Image" />
-                <span v-if="selectedFile">Image sélectionnée : {{ selectedFile.name }}</span><br>
-            </b-input-group>
-        </div>
+      <!-- contenu texte du post  -->
+      <section>
+          <textarea
+            class="form-control"
+            id="text-password"
+            rows="6"
+            placeholder="Écrivez votre premier message !"
+            v-model="post.text"
+            required>
+          </textarea>
+      </section>
 
-        <div>
-            <button class="success" @click="sendPost">Poster</button>
-            <button text href="/Home" color="black">Annuler</button>
-        </div>
+      <!-- image à charger -->
+      <div>
+        <b-form-file v-model="post.imageUrl" accept="image/*" class="mt-3" @change="uploadImage" id="file-input" plain required></b-form-file>
+     
+      </div>
 
-    </div>
+      <hr>
+
+      <!-- bouton pour partager le post -->
+      <b-button type="submit" variant="outline-primary">Partager</b-button>
+
+    </b-form>
+
+  </b-card>
+
 </template>
 
 <script>
-    import axios from "axios"
+import axios from "axios";
 
-    export default {
-        name: "PostForm",
-        data() {
-            return {
-                valid: true,
-
-                textRules: [
-                    v => !!v || 'Ecrivez votre message',
-                ],
-                dataPost: {
-                    text: "",
-                    imageUrl: "",
-                    UserId: sessionStorage.userId,
-                    selectedFile: null,
-                },
-                dataPostS: "",
-                msg: false,
-                message: "",
-            }
-        },
-        methods: {
-            sendPost() {
-                this.dataPostS = {
-                    post: this.dataPost
-                };
-                axios.post("http://localhost:3000/api/posts/", this.dataPostS, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: 'Bearer ' + sessionStorage.getItem("jwt")
-                        }
-                    })
-                    .then(response => {
-                        let rep = response.data;
-                        this.message = rep.message;
-                        this.msg = true;
-                        this.form = false;
-                        this.$router.push('/Home')
-
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.message = error;
-                        this.msg = true
-                    });
-            },
-        },
-        components: {
-
-        },
+export default {
+  name: "createPost",
+  data() {
+    return {
+      post:{
+        text: "",
+        imageUrl: null,
+      }
     }
+  },
+  methods: {
+    createPost: function() {
+      const newPost = new FormData();
+      newPost.append("text", this.post.text);
+      newPost.append("image", this.post.imageUrl, this.post.imageUrl.filename);
+      if( !newPost ) {
+        alert('Champ requis !')
+      }
+      // requête pour poster le post
+      axios.post("http://localhost:3000/api/posts",  newPost,
+        { headers: { Authorization: 'Bearer ' + localStorage.getItem('jwt') }}
+      )
+      .then(() => { this.post ; location.replace("http://localhost:8080/#/");})
+      .catch((erreur) => ("erreur" + erreur))
+    },
+    // fontion pour charger l'image 
+    uploadImage(e) {
+      this.post.imageUrl = e.target.files[0];
+      if (this.post.imageUrl.length === 0) {
+        return ;
+      }
+    }
+  }
+}
 </script>
 
-<style lang="scss">
-    .formPost {
-        text-align: center;
-    }
-</style>
