@@ -99,7 +99,9 @@ exports.getOneUser = (req, res, next) => {
   const User = models.User;
 
   User.findOne({
-    _id: req.params.id
+    where:{
+      id: req.params.id}
+    
   }).then(
     (user) => {
       res.status(200).json(user);
@@ -175,6 +177,9 @@ exports.modifyUser = (req, res, next) => {
   }).then((user) => {
     console.log(userObject);
     user.firstName = userObject.user.firstName;
+    user.surname = userObject.user.surname;
+    user.photo = userObject.user.photo;
+    user.bio = userObject.user.bio;
     user.save()
       .then(() => res.status(200).json({
         user: user

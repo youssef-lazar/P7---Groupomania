@@ -1,7 +1,8 @@
 export default function auth () {
-    let token = localStorage.getItem('token')
-    if (token) {
-        return { 'Authorization': `Bearer ${token}` }
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'))
+
+    if (currentUser) {
+        return { 'Authorization': `Bearer ${currentUser.token}` }
     } else {
         return undefined
     }
