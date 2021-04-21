@@ -14,6 +14,9 @@ const store = new Vuex.Store({
     // User
 
     currentUser: JSON.parse(localStorage.getItem('currentUser')),
+    userDetails: JSON.parse(localStorage.getItem('userDetails')),
+
+    usersList: [],
 
   // Posts
 
@@ -26,8 +29,11 @@ const store = new Vuex.Store({
 
     removeCurrentUser(state){
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('userDetails');
         state.currentUser = null;
+        state.userDetails = null;
     },
+
     setAuthentication(state, {
       token,
       userId,
@@ -41,15 +47,43 @@ const store = new Vuex.Store({
       localStorage.setItem("currentUser", JSON.stringify(state.currentUser));
     },
 
+    setUserDetails(state, {
+        firstName,
+        surname,
+        email,
+        photo,
+        bio,
+        createdAt
+    }) {
+      state.userDetails = {
+        firstName,
+        surname,
+        email,
+        photo,
+        bio,
+        createdAt
+      }
+      localStorage.setItem("userDetails", JSON.stringify(state.userDetails));
+    },
+
+    setUsersList(state, usersList) {
+    state.usersList = usersList
+    },
+    
+
     // posts
     setPosts(state, posts) {
     state.posts = posts
     },
 
   },
+
   getters: {
     currentUser(state) {
       return state.currentUser;
+    },
+    userDetails(state) {
+      return state.userDetails;
     }
   },
 
@@ -83,6 +117,44 @@ const store = new Vuex.Store({
       commit('setAuthentication',res.data);
     },
 
+
+    async getOneUser({commit},{id}) {
+      try{
+      const response = await UserService.getOneUser(id);
+        commit("setUserDetails", response.data);
+        return response.data;
+      }catch(error){
+        console.log(error.response);
+      }
+    },
+
+    async modifyUser({ commit }) {
+      try{
+      const response = await UserService.modifyUser();
+        commit("setUserDetails", response.data);
+      }catch(error){
+        console.log(error.response);
+      }
+    },
+
+    async deleteUser({ commit }) {
+      try{
+      const response = await UserService.deleteUser();
+        commit("setUserDetails", response.data);
+      }catch(error){
+        console.log(error.response);
+      }
+    },
+
+    async getAllUsers({ commit }) {
+      try{
+      const response = await UserService.getAllUsers();
+        commit("setUsersList", response.data);
+      }catch(error){
+        console.log(error.response);
+      }
+    },
+
     // Posts
 
     async getAllPosts({ commit }) {
@@ -92,6 +164,16 @@ const store = new Vuex.Store({
       }catch(error){
         console.log(error.response);
       }
+    },
+
+    async createPost({
+      commit
+    }, {text, imageUrl}) {
+      const res = await PostService.createPost({
+        text,
+        imageUrl
+      });
+      commit(res.data);
     },
 
   }
