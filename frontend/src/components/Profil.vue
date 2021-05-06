@@ -11,28 +11,10 @@
                     <p>Votre Nom: {{ user.surname }}</p>
                     <p>Votre Bio: {{ user.bio }}</p>
                 </div>
-                
-                <!-- <button @click="edit">Modifier mon compte</button>
 
-                <form class="edit-user" v-if="edit">
-                    <label class="title font-weight-bold" for="firstName"> Prénom : </label><br>
-                    <textarea id="firstName" v-model="user.firstName"> </textarea><br>
-                    <label class="title font-weight-bold" for="surname"> Nom : </label><br>
-                    <textarea id="surname" v-model="user.surname"> </textarea>
-                    <label class="title font-weight-bold" for="bio"> Bio : </label><br>
-                    <textarea id="bio" v-model="user.bio"> </textarea>
-                    <button type="button" class="btn btn-success" color="green" data-dismiss="modal"
-                        @click="modifyUser(user)">Save </button>
-                    <button type="button" class="btn btn-default" color="primary" data-dismiss="modal"
-                        @click="edit = !edit">X</button>
-                </form> -->
+                <button @click="edit">Modifier mon compte</button>
 
-                <button @click="toggleModale">Supprimer mon compte</button>
-                <div id="modal-confirmation" v-if="showModal===true" @close="toggleModale">
-                    <p id="confirm-delete">Etes vous sûr de vouloir supprimer votre compte ?</p>
-                    <button id="confirm" @click="deleteAccount">OUI</button>
-                    <button id="cancel" @click="toggleModale">NON</button>
-                </div>
+                <button type="button" @click="deleteProfil">Supprimer mon compte</button>
             </div>
         </main>
     </div>
@@ -49,35 +31,36 @@
                 user: null
             }
         },
-        
+
 
         computed: {
-            ...mapState(["currentUser","userDetails"])
+            ...mapState(["currentUser", "userDetails"])
         },
         async mounted() {
-            if(this.currentUser){
-               this.user =  await this.$store.dispatch("getOneUser",{id:this.currentUser.userId})
+            if (this.currentUser) {
+                this.user = await this.$store.dispatch("getOneUser", {
+                    id: this.currentUser.userId
+                })
             }
         },
 
         methods: {
             ...mapActions(['deleteUser']),
 
-            async toggleModale() {
-                    this.$store.dispatch('deleteUser')
-                    this.$router.push('/signup')
+            async deleteProfil() {
+                if (confirm("Souhaitez-vous supprimer votre compte?")) {
+                    try{
+                        
+                    await this.$store.dispatch('deleteUser', this.user)
+                        this.$router.push("/signup");
+                    }catch(error){
+                        // TODO  QUOI FAIRE ??
+                    }
+                }
             },
 
-            ...mapActions(['modifyUser']),
-
             async edit() {
-                try {
-                     await this.modifyUser({firstName:this.firstName, surname: this.surname, bio: this.bio});
-                            this.isError = false;
-                            this.$router.push('/Profil')
-                }catch(err){                    
-                        this.isError = true;
-                }
+                this.$router.push('/ModifyProfil')
             },
 
 

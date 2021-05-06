@@ -1,15 +1,10 @@
 <template>
-    <nav>
+    <nav v-if="connected()">
         <div class="left-nav">
             <ul>
                 <li>
                     <a>
                         <router-link to="/">Accueil</router-link>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <router-link to="/Profil">Votre Profil </router-link>
                     </a>
                 </li>
             </ul>
@@ -32,6 +27,33 @@
                         <router-link to="/login">Connexion </router-link>
                     </a>
                 </li>
+            </ul>
+        </div>
+    </nav>
+
+    <nav v-else>
+        <div class="left-nav">
+            <ul>
+                <li>
+                    <a>
+                        <router-link to="/">Accueil</router-link>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <router-link to="/Profil">Votre Profil </router-link>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="logo">
+            <div class="logo-image">
+                <img src="../assets/icon-above-font.png">
+            </div>
+
+        </div>
+        <div class="right-nav">
+            <ul>
                 <li>
                     <a style="color:red;" @click="logoutHandler">
                         Déconnexion
@@ -64,7 +86,18 @@ import {mapActions, mapGetters} from 'vuex';
             ...mapActions(['logout']),
             logoutHandler() {
             this.logout();
+            this.$router.push("/login");
               
+            },
+
+            connected() {
+                let connected = localStorage.getItem('currentUser');
+                if( connected == null ) {
+                    return true;
+                }
+                else{
+                    return false;
+                }
             },
         }
 
