@@ -128,21 +128,29 @@ const store = new Vuex.Store({
       }
     },
 
-    async modifyUser({ commit }) {
+    async modifyUser({ commit },{id, firstName, surname, bio}) {
+      console.log(id,firstName,surname);
       try{
-      const response = await UserService.modifyUser();
-        commit("setUserDetails", response.data);
+      const response = await UserService.modifyUser(id,{
+        user:{
+        firstName,
+        surname,
+        bio
+      }});
+        commit(response.data);
+        return response.data;
       }catch(error){
         console.log(error.response);
       }
     },
 
-    async deleteUser({ commit }) {
+    async deleteUser({ commit },{id}) {
       try{
-      const response = await UserService.deleteUser();
-        commit("setUserDetails", response.data);
+      const response = await UserService.deleteUser(id);
+        commit("removeCurrentUser", response.data);
+        return response.data;
       }catch(error){
-        console.log(error.response);
+       throw new Error(error.message)
       }
     },
 
@@ -166,9 +174,7 @@ const store = new Vuex.Store({
       }
     },
 
-    async createPost({
-      commit
-    }, {text, imageUrl}) {
+    async createPost({ commit }, {text, imageUrl}) {
       const res = await PostService.createPost({
         text,
         imageUrl

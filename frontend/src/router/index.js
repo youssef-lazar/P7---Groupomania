@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import MyProfil from '../views/MyProfil'
+import ModifyProfilForm from '../components/ModifyProfilForm'
 
 
 
@@ -40,7 +41,11 @@ Vue.use(VueRouter)
     name: 'Profil',
     component: MyProfil,
   },
-
+    {
+    path: '/ModifyProfil',
+    name: 'ModifyProfilForm',
+    component: ModifyProfilForm,
+  },
  
 ]
 

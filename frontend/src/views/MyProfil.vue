@@ -14,6 +14,7 @@
 <script>
 
 import Profil from '@/components/Profil.vue'
+
 export default {
     name: 'Home',
     data(){
@@ -26,6 +27,7 @@ export default {
     },
     components:{
         Profil,
+
     }
 }
 </script>
