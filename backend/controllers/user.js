@@ -104,8 +104,9 @@ exports.getOneUser = (req, res, next) => {
     
   }).then(
     (user) => {
+      if (req.userId == req.params.id || req.isAdmin == 1){
       res.status(200).json(user);
-    }
+    }}
   ).catch(
     (error) => {
       res.status(404).json({
@@ -143,7 +144,7 @@ exports.deleteUser = (req, res, next) => {
       }
     })
     .then((user) => {
-      if (req.userId == req.params.id) {
+      if (req.userId == req.params.id || req.isAdmin == 1) {
         user.destroy()
           .then(() => res.status(200).json({
             message: 'Utilisateur supprimé'
@@ -175,11 +176,13 @@ exports.modifyUser = (req, res, next) => {
       id: req.params.id
     }
   }).then((user) => {
-    console.log(userObject);
+    if (req.userId == req.params.id || req.isAdmin == 1){
+
     user.firstName = userObject.user.firstName;
     user.surname = userObject.user.surname;
     user.photo = userObject.user.photo;
     user.bio = userObject.user.bio;
+  }
     user.save()
       .then(() => res.status(200).json({
         user: user

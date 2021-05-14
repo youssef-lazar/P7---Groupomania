@@ -68,9 +68,13 @@ import {mapActions} from 'vuex';
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   @import  '../assets/scss/_mixins.scss';
+
   #LoginForm {
-  margin: 2em auto;
-  max-width: 750px;
+  margin:0;
+  padding:100px;
+  background: url("../assets/fond.jpg") no-repeat center fixed; 
+  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+  background-size: cover; /* version standardisée */
 }
 
   .button {

@@ -40,12 +40,18 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
-    import { mapState } from "vuex";
-
+    import { mapActions, mapState } from 'vuex';
+    
     // TODO en props de ce component tu dois avoir userID
     export default {
         name: 'Home',
+        props: {
+            userId: {
+                type: Number,
+                default: null,
+                required: false
+            }
+        },
         data() {
             return {
                 user: null,
@@ -69,8 +75,8 @@
 
             // requête pour modifier les informations du compte
             async saveModify() {
-                console.log(this.user)  
-                              await this.modifyUser(this.user) 
+                console.log(this.user)
+                await this.modifyUser(this.user)
                 alert("Votre profil a bien été modifié")
                 this.$router.push('/Profil')
             },
@@ -78,8 +84,6 @@
             async cancel() {
                 this.$router.push('/Profil')
             },
-
-
         }
     }
 </script>

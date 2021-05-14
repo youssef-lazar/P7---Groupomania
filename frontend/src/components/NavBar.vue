@@ -1,5 +1,5 @@
 <template>
-    <nav v-if="connected()">
+    <nav v-if="disconnected()">
         <div class="left-nav">
             <ul>
                 <li>
@@ -8,12 +8,6 @@
                     </a>
                 </li>
             </ul>
-        </div>
-        <div class="logo">
-            <div class="logo-image">
-                <img src="../assets/icon-above-font.png">
-            </div>
-
         </div>
         <div class="right-nav">
             <ul>
@@ -44,13 +38,12 @@
                         <router-link to="/Profil">Votre Profil </router-link>
                     </a>
                 </li>
+                <li>
+                    <a>
+                        <router-link v-if="admin()" to="/AllProfils">Tous les profils </router-link>
+                    </a>
+                </li>
             </ul>
-        </div>
-        <div class="logo">
-            <div class="logo-image">
-                <img src="../assets/icon-above-font.png">
-            </div>
-
         </div>
         <div class="right-nav">
             <ul>
@@ -90,12 +83,22 @@ import {mapActions, mapGetters} from 'vuex';
               
             },
 
-            connected() {
-                let connected = localStorage.getItem('currentUser');
-                if( connected == null ) {
+            disconnected() {
+                let disconnected = localStorage.getItem('currentUser');
+                if( disconnected == null ) {
                     return true;
                 }
                 else{
+                    return false;
+                }
+            },
+
+            admin() {
+                let isAdmin = this.currentUser.isAdmin;
+                if(isAdmin > 0 ) {
+                    return true;
+                }
+                else {
                     return false;
                 }
             },
@@ -108,7 +111,7 @@ import {mapActions, mapGetters} from 'vuex';
     nav {
         box-sizing: border-box;
         width: 100%;
-        max-width: 1400px;
+        height: 150px;
         margin: auto;
         position: relative;
         top: 0;
@@ -117,6 +120,7 @@ import {mapActions, mapGetters} from 'vuex';
         padding: 20px;
         justify-content: space-between;
         border-bottom: thin solid black;
+        background: url("../assets/navbar.png"); 
     }
 
     h1 {
@@ -129,23 +133,6 @@ import {mapActions, mapGetters} from 'vuex';
         font-size: 1.2em;
         font-weight: 400;
         margin: 0;
-    }
-
-    .logo {
-        display: flex;
-        align-items: center;
-    }
-
-    .logo-text {
-        text-align: center;
-    }
-
-    .logo-image {
-        img {
-            height: 8.5em;
-        }
-
-        margin-right: 1em;
     }
 
     .left-nav,
@@ -172,7 +159,7 @@ import {mapActions, mapGetters} from 'vuex';
     }
 
     a {
-        color: black;
+        color: white;
         font-weight: 400;
         text-decoration: none;
         cursor: pointer;

@@ -5,6 +5,7 @@ import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import MyProfil from '../views/MyProfil'
 import ModifyProfilForm from '../components/ModifyProfilForm'
+import AllProfils from '../components/AllProfils'
 
 
 
@@ -45,6 +46,11 @@ Vue.use(VueRouter)
     path: '/ModifyProfil',
     name: 'ModifyProfilForm',
     component: ModifyProfilForm,
+  },
+    {
+    path: '/AllProfils',
+    name: 'AllProfils',
+    component: AllProfils,
   },
  
 ]

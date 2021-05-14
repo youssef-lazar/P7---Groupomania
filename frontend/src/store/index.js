@@ -16,7 +16,7 @@ const store = new Vuex.Store({
     currentUser: JSON.parse(localStorage.getItem('currentUser')),
     userDetails: JSON.parse(localStorage.getItem('userDetails')),
 
-    usersList: [],
+    users: [],
 
   // Posts
 
@@ -66,8 +66,8 @@ const store = new Vuex.Store({
       localStorage.setItem("userDetails", JSON.stringify(state.userDetails));
     },
 
-    setUsersList(state, usersList) {
-    state.usersList = usersList
+    setUsersList(state, users) {
+    state.users = users
     },
     
 
@@ -129,7 +129,6 @@ const store = new Vuex.Store({
     },
 
     async modifyUser({ commit },{id, firstName, surname, bio}) {
-      console.log(id,firstName,surname);
       try{
       const response = await UserService.modifyUser(id,{
         user:{
