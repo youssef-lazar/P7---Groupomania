@@ -102,7 +102,7 @@ exports.createPost = (req, res, next) => {
 
       const Post = models.Post;
 
-      Post.findAll().then(
+      Post.findAll({ limit: 10, order: [['createdAt', 'DESC']]}).then(
         (posts) => {
           res.status(200).json(posts);
         }

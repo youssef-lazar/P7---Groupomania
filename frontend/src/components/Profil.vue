@@ -61,7 +61,7 @@
             },
 
             async edit() {
-                this.$router.push('/ModifyProfil')
+                this.$router.push('/modify-profil')
             },
         }
     }
