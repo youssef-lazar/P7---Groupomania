@@ -4,7 +4,7 @@
   <b-card tag="article" class="col-md-5 mx-auto mt-4 container shadow">
 
     <!-- formulaire pour créer le post -->
-    <b-form method="POST" @submit.prevent="submitForm" enctype=" multipart / form-data ">
+    <b-form method="POST" @submit.prevent="submitForm" enctype="multipart/form-data">
 
       <!-- contenu texte du post  -->
       <section>
@@ -15,8 +15,7 @@
 
       <!-- image à charger -->
       <div>
-        <b-form-file v-model="post.imageUrl" accept="image/*" class="mt-3" @change="uploadImage" id="file-input" plain
-          required></b-form-file>
+        <b-form-file v-model="post.imageUrl" accept="image/*" class="mt-3"  id="file-input" plain></b-form-file>
 
       </div>
 
@@ -57,13 +56,6 @@
         return true;
         
       },
-          // fontion pour charger l'image 
-    uploadImage(e) {
-      this.publication.imageUrl = e.target.files[0];
-      if (this.publication.imageUrl.length === 0) {
-        return ;
-      }
-    }
     }
   }
 </script>

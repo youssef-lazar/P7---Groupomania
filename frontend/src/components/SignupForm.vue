@@ -1,63 +1,35 @@
 <template>
 
-    <body>
-        <div class="container signup">
-            <div class="row main">
-                <div class="panel-heading">
-                </div>
-                <div class="main-login main-center">
-                    <form class="form-horizontal" @submit.prevent="submitForm" action="/api/user/signup" method="post">                    
-                        <div class="form">
-                            <label for="surname" class="cols-sm-2 control-label">Votre Nom</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user fa"
-                                            aria-hidden="true"></i></span>
-                                    <input class="form" v-model="surname" type="text" name="surname"
-                                        id="surname" placeholder="Nom" required />
-                                </div>
-                            </div>
+    <body id="SignupForm">
+        <div class="container">
+            <h1 class="form-heading">Inscription</h1>
+            <div class="login-form">
+                <div class="main-div">
+
+                    <form @submit.prevent="submitForm" id="Login">
+
+                        <div class="form-group">
+                            <input class="form-control" v-model="surname" type="text" name="surname" id="surname"
+                                placeholder="Votre Nom" required />
                         </div>
 
-                        <div class="form">
-                            <label for="firstName" class="cols-sm-2 control-label">Votre Prénom</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user fa"
-                                            aria-hidden="true"></i></span>
-                                    <input class="form" v-model="firstName" type="text" name="firstName"
-                                        id="firstName" placeholder="Prenom" required />
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <input class="form-control" v-model="firstName" type="text" name="firstName" id="firstName"
+                                placeholder="Votre Prénom" required />
                         </div>
 
-                        <div class="form">
-                            <label for="email" class="cols-sm-2 control-label">Adresse Mail</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope fa"
-                                            aria-hidden="true"></i></span>
-                                    <input class="form" v-model="email" type="email" name="email" id="email"
-                                        placeholder="Email" required />
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <input class="form-control" v-model="email" type="email" name="email" id="email"
+                                placeholder="Email" required />
                         </div>
 
-                        <div class="form">
-                            <label for="password" class="cols-sm-2 control-label">Mot de passe</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-lock fa-lg"
-                                            aria-hidden="true"></i></span>
-                                    <input class="form" v-model="password" type="password" name="password"
-                                        id="password" minlength="6" placeholder="Mot de passe" required />
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <input class="form-control" v-model="password" type="password" name="password" id="password"
+                                minlength="6" placeholder="Mot de passe" required />
                         </div>
 
-                        <div class="form ">
-                            <input type="submit" value="Inscription" id="button" class="btn btn-primary btn-lg btn-block login-button" />
-                        </div>
+                        <button value="Connexion" class="btn btn-primary">Connexion</button>
+
                     </form>
                 </div>
             </div>
@@ -66,7 +38,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+    import { mapActions } from 'vuex';
 
     export default {
         name: "Signup",
@@ -82,13 +54,18 @@ import {mapActions} from 'vuex';
         methods: {
             ...mapActions(['signup']),
 
-             async submitForm() {
+            async submitForm() {
                 try {
-                     await this.signup({firstName:this.firstName, surname:this.surname, email:this.email, password:this.password});
-                            alert("Votre compte a bien été créé, veuillez vous connecter");
-                            this.$router.push('/')
-                }catch(err){                    
-                        console.log(err);
+                    await this.signup({
+                        firstName: this.firstName,
+                        surname: this.surname,
+                        email: this.email,
+                        password: this.password
+                    });
+                    alert("Votre compte a bien été créé");
+                    this.$router.push('/')
+                } catch (err) {
+                    console.log(err);
                 }
             },
         },
@@ -97,13 +74,19 @@ import {mapActions} from 'vuex';
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  @import  '../assets/scss/_mixins.scss';
+    @import '../assets/scss/_mixins.scss';
 
-  .signup {
-  margin: auto;
-  max-width: 750px;
-  text-align: center;
-  margin-right: 130px;
-}
+    #SignupForm {
+        margin: 0;
+        padding: 100px;
+        background: url("../assets/fond.jpg") no-repeat center fixed;
+        -webkit-background-size: cover;
+        /* pour anciens Chrome et Safari */
+        background-size: cover;
+        /* version standardisée */
+    }
 
+    .button {
+        @include button-connect;
+    }
 </style>

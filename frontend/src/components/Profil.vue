@@ -1,4 +1,5 @@
 <template>
+<body>
     <div class="profile">
         <main>
             <div v-if="user" id="profile">
@@ -18,11 +19,11 @@
             </div>
         </main>
     </div>
+</body>
 </template>
 
 <script>
-    import { mapState } from "vuex";
-    import { mapActions } from 'vuex';
+    import { mapState, mapActions  } from "vuex";
 
     export default {
         name: 'Profil',
@@ -62,8 +63,6 @@
             async edit() {
                 this.$router.push('/ModifyProfil')
             },
-
-
         }
     }
 </script>
@@ -159,6 +158,13 @@
             }
         }
     }
+    body {
+  margin:0;
+  padding:100px;
+  background: url("../assets/fond.jpg") no-repeat center fixed; 
+  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+  background-size: cover; /* version standardisée */
+}
 
     // RESPONSIVE
     @media screen and (min-width: 300px) and (max-width: 325px) {

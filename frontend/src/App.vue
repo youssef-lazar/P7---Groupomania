@@ -2,10 +2,6 @@
   <div id="app">
    <NavBar/>
     <router-view />
-
-    <footer id="footer">
-      <a href="utilisation" > Mentions Legales </a>
-    </footer>
   </div>
 </template>
 
