@@ -1,5 +1,37 @@
 <template>
-    <nav v-if="disconnected()">
+    <nav v-if="loggedIn">
+        <div class="left-nav">
+            <ul>
+                <li>
+                    <a>
+                        <router-link to="/">Accueil</router-link>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <router-link to="/profil">Votre Profil </router-link>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <router-link v-if="isAdmin" to="/all-profils">Tous les profils </router-link>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="right-nav">
+            <ul>
+                <li>
+                    <a style="color:red;" @click="logoutHandler">
+                        Déconnexion
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+
+    <nav v-else>
         <div class="left-nav">
             <ul>
                 <li>
@@ -19,37 +51,6 @@
                 <li>
                     <a>
                         <router-link to="/login">Connexion </router-link>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <nav v-else>
-        <div class="left-nav">
-            <ul>
-                <li>
-                    <a>
-                        <router-link to="/">Accueil</router-link>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <router-link to="/Profil">Votre Profil </router-link>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <router-link v-if="admin()" to="/AllProfils">Tous les profils </router-link>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="right-nav">
-            <ul>
-                <li>
-                    <a style="color:red;" @click="logoutHandler">
-                        Déconnexion
                     </a>
                 </li>
             </ul>
@@ -81,26 +82,6 @@ import {mapActions, mapGetters} from 'vuex';
             this.logout();
             this.$router.push("/login");
               
-            },
-
-            disconnected() {
-                let disconnected = localStorage.getItem('currentUser');
-                if( disconnected == null ) {
-                    return true;
-                }
-                else{
-                    return false;
-                }
-            },
-
-            admin() {
-                let isAdmin = this.currentUser.isAdmin;
-                if(isAdmin > 0 ) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
             },
         }
 

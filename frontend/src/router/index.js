@@ -38,17 +38,17 @@ Vue.use(VueRouter)
     }
   },
     {
-    path: '/Profil',
-    name: 'Profil',
+    path: '/profil',
+    name: 'profil',
     component: MyProfil,
   },
     {
-    path: '/ModifyProfil',
+    path: '/modify-profil',
     name: 'ModifyProfilForm',
     component: ModifyProfilForm,
   },
     {
-    path: '/AllProfils',
+    path: '/all-profils',
     name: 'AllProfils',
     component: AllProfils,
   },

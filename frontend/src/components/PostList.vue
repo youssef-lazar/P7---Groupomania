@@ -16,8 +16,7 @@
         <div>
 
             <!-- one-post -->
-            <b-card tag="article" class="shadow mb-4" v-for="post in posts" :key="post.id"
-                id="card">
+            <b-card tag="article" class="shadow mb-4" v-for="post in posts" :key="post.id" id="card">
 
 
 
@@ -58,14 +57,12 @@
 </template>
 
 <script>
-
-    import { mapState } from "vuex"; 
+    import { mapState } from "vuex";
 
     export default {
         name: "Wall",
         data() {
-            return {
-            }
+            return {}
         },
 
         computed: {
@@ -77,17 +74,17 @@
             this.$store.dispatch("getAllPosts")
         },
 
-    methods: {
-        // méthode pour verifier si l'utilisateur est admin
-        admin() {
-            if (localStorage.getItem('isAdmin') == "1") {
-                return true
-            } else if (localStorage.getItem('isAdmin') == "0") {
-                return false
-            }
-        },
+        methods: {
+            // méthode pour verifier si l'utilisateur est admin
+            admin() {
+                if (localStorage.getItem('isAdmin') == "1") {
+                    return true
+                } else if (localStorage.getItem('isAdmin') == "0") {
+                    return false
+                }
+            },
 
-    }
+        }
     };
 </script>
 

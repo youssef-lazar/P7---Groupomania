@@ -17,6 +17,7 @@ const store = new Vuex.Store({
     userDetails: JSON.parse(localStorage.getItem('userDetails')),
 
     users: [],
+    
 
   // Posts
 
@@ -84,8 +85,14 @@ const store = new Vuex.Store({
     },
     userDetails(state) {
       return state.userDetails;
-    }
-  },
+    },
+  loggedIn(state) {
+      return state.currentUser !== null;
+    },
+    isAdmin(state) {
+      return state.currentUser.isAdmin != 0;
+    },
+  }, 
 
   actions: {
 
