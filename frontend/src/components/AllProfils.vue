@@ -25,7 +25,11 @@
 </template>
 
 <script>
-    import { mapState, mapActions, mapGetters } from "vuex";
+    import {
+        mapState,
+        mapActions,
+        mapGetters
+    } from "vuex";
     import UserService from "../services/user.js"
 
     export default {
@@ -81,11 +85,15 @@
 
 <style scoped lang="scss">
     body {
-        margin: 0;
-        padding: 100px;
-        background: url("../assets/fond.jpg") no-repeat center fixed;
-        -webkit-background-size: cover;
+        background-image: url(/img/fond.6fed4a74.jpg);
         background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: auto;
+        position: absolute;
+        left: 0;
+        min-height: 100%;
+        min-width: 100%;
     }
 
     .allCards {
@@ -93,8 +101,30 @@
         flex-direction: row;
     }
 
-    card {
-        width: 300px;
+    .card {
+        display: flex;
+        flex-direction: column;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border-radius: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: space-between;
+        width: auto;
+    }
+
+    .card-body {
+        border: solid;
+        margin: auto;
+        text-align: center;
+        width: 200px;
+        border-radius: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        padding-bottom: 40px;
     }
 
     button {
