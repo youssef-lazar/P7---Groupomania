@@ -1,21 +1,28 @@
 <template>
 
-<body>
-  <div class="home" v-if="disconnected()">
-    <h1> Bienvenue sur le site Groupomania </h1>
-  </div>
+  <body>
+    <div class="home" v-if="disconnected()">
+      <h1> Groupomania </h1>
+
+      <div class="presentation">
+        Bienvenue sur le réseau social interne conçu pour les employés de Groupomania. Le but de cet outil est de
+        faciliter les interactions entre collègues.
+        Il vous permettra de publier des textes ainsi que du contenu multimédia avec tous les employés inscrits.
+        Nous espéront que ce site vous permettra de faire plus ample connaissance et ce, dans un cadre plus informel.
+      </div>
 
 
-  <div class="home" v-else>
-    <PostForm msg="posts" />
-    <PostList/>
-  </div>
-  
-</body>
+    </div>
+
+    <div class="home" v-else>
+      <PostForm msg="posts" />
+      <PostList />
+    </div>
+  </body>
+
 </template>
 
 <script>
-
   import PostForm from "@/components/PostForm.vue";
   import PostList from "@/components/PostList.vue";
 
@@ -28,26 +35,46 @@
 
     methods: {
       disconnected() {
-                let disconnected = localStorage.getItem('currentUser');
-                if( disconnected == null ) {
-                    return true;
-                }
-                else{
-                    return false;
-                }
-            },
+        let disconnected = localStorage.getItem('currentUser');
+        if (disconnected == null) {
+          return true;
+        } else {
+          return false;
+        }
+      },
     }
   };
 </script>
 
 <style scoped lang="scss">
+  body {
+    background-image: url(/img/fond.6fed4a74.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    left: 0;
+    min-height: 100%;
+    min-width: 1024px;
+  }
 
-body {
-  margin:0;
-  padding:100px;
-  background: url("../assets/fond.jpg") no-repeat center fixed; 
-  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-  background-size: cover; /* version standardisée */
-}
+  h1 {
+    text-align: center;
+    padding-bottom: 40px;
+    font-size: 3.5em;
+  }
+
+  .presentation {
+    text-align: center;
+    max-width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.5em;
+    background-color: #aeaeaee0;
+    border: 0.25px solid #aeaeaee0;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px 0px rgba(72, 79, 88, 1);
+  }
 
 </style>

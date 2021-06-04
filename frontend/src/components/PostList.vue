@@ -23,19 +23,37 @@
                 <!-- header -->
                 <div class="headerPost">
 
-                    <!-- post username -->
+                    <!-- Auteur -->
                     <p>{{ post.User.firstName }} {{ post.User.surname }}</p>
                     <!-- post créée le ... -->
                     <p>{{post.createdAt.slice(0,10).split('-').reverse().join('/') + ' à ' + post.createdAt.slice(11,16)}}
                     </p>
                 </div>
 
-                <!-- contenu du post -->
+                <!-- Contenu du post -->
                 <p>{{post.text}}</p>
 
-                <!-- image du post -->
+                <!-- Image du post -->
                 <img :src="post.imageUrl" class="rounded img-fluid d-flex ml-auto mr-auto " id="imgResponsive"
                     alt="Responsive image" accept="image/*">
+
+
+
+                <!-- Likes/Dislikes du post -->
+                <div class="like-buttons" >
+
+                    <div class="likes">
+                        <button @click="like(post)"><i class="like fa fa-thumbs-up"></i></button>
+                        <span>{{ post.likes }}</span>
+                    </div>
+
+
+                    <div class="dislikes">
+                        <button @click="dislike(post)"><i class="dislike fa fa-thumbs-down"></i></button>
+                        <span>{{ post.dislikes }}</span>
+                    </div>
+
+                </div>
 
                 <button v-if="post.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1"
                     @click="edit(post)"><i class="fa fa-edit fa"></i></button>
@@ -50,7 +68,10 @@
 
 <script>
     import PostService from "../services/post";
-    import { mapState, mapGetters } from "vuex";
+    import {
+        mapState,
+        mapGetters
+    } from "vuex";
 
     export default {
         name: "Wall",
@@ -61,7 +82,7 @@
                 required: false
             }
         },
-    data() {
+        data() {
             return {}
         },
 
@@ -85,15 +106,6 @@
                 this.$router.push('/modify-post/' + post.id)
             },
 
-            /*deletePost(post, UserId) {
-                PostService.deletePost(post.id, {
-                    UserId: UserId,
-                }).then((res) => {
-                    console.log(res.data.message);
-                    this.$store.dispatch("getAllPosts");
-                })
-            }*/
-
             async deletePost(post) {
                 if (confirm("Souhaitez-vous supprimer ce post?")) {
                     try {
@@ -115,11 +127,17 @@
         /** Titre h2 de chaque section  */
         font-size: 10px;
     }
+    .like-buttons {
+  display: flex;
+  i {
+    margin-right: 0.5em;
+    cursor: pointer;
+  }
+}
 
-    /* couleur de l'icon update */
-    #AdminUpdatepost {
-        color: red;
-    }
+.likes, .dislikes {
+  margin: 0 0.4em;
+}
 
     @media (max-width: 500px) {
         .headerPost {
