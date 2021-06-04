@@ -83,10 +83,7 @@ const store = new Vuex.Store({
     currentUser(state) {
       return state.currentUser;
     },
-    userDetails(state) {
-      return state.userDetails;
-    },
-  loggedIn(state) {
+    loggedIn(state) {
       return state.currentUser !== null;
     },
     isAdmin(state) {
@@ -124,7 +121,6 @@ const store = new Vuex.Store({
       commit('setAuthentication',res.data);
     },
 
-
     async getOneUser({commit},{id}) {
       try{
       const response = await UserService.getOneUser(id);
@@ -143,17 +139,16 @@ const store = new Vuex.Store({
         surname,
         bio
       }});
-        commit(response.data);
+       commit(response.data);
         return response.data;
       }catch(error){
         console.log(error.response);
       }
     },
 
-    async deleteUser({ commit },{id}) {
+    async deleteUser({id}) {
       try{
       const response = await UserService.deleteUser(id);
-        commit("removeCurrentUser", response.data);
         return response.data;
       }catch(error){
        throw new Error(error.message)
@@ -173,7 +168,7 @@ const store = new Vuex.Store({
 
     async getAllPosts({ commit }) {
       try{
-      const response = await PostService.getAllPosts({jwt: this.state.currentUser.token});
+      const response = await PostService.getAllPosts();
         commit("setPosts", response.data);
       }catch(error){
         console.log(error.response);
@@ -187,6 +182,41 @@ const store = new Vuex.Store({
       });
       commit(res.data);
     },
+
+    async getOnePost({commit},{id}) {
+      try{
+      const response = await PostService.getOnePost(id);
+        commit("setPosts", response.data);
+        return response.data;
+      }catch(error){
+        console.log(error.response);
+      }
+    },
+
+    async modifyPost({ commit },{id, text, imageUrl}) {
+      try{
+      const response = await PostService.modifyPost(id,{
+        post:{
+        text,
+        imageUrl
+      }});
+        commit(response.data);
+        return response.data;
+      }catch(error){
+        console.log(error.response);
+      }
+    },
+
+    async deletePost({ commit },{id}) {
+      try{
+      const response = await PostService.deletePost(id);
+        commit(response.data);
+        return response.data;
+      }catch(error){
+       throw new Error(error.message)
+      }
+    },
+
 
   }
 })

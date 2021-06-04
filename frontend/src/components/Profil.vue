@@ -40,8 +40,7 @@
         async mounted() {
             if (this.currentUser) {
                 this.user = await this.$store.dispatch("getOneUser", {
-                    id: this.currentUser.userId
-                })
+                    id: this.currentUser.userId })
             }
         },
 
@@ -61,7 +60,7 @@
             },
 
             async edit() {
-                this.$router.push('/modify-profil')
+                this.$router.push('/modify-profil/' + this.currentUser.userId)
             },
         }
     }

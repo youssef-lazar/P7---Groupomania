@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
 const models = require('../models');
+const jwtUtils = require("../middleware/jwt");
 require('dotenv').config();
 
 function isValid(email) {
@@ -74,14 +75,7 @@ exports.login = (req, res, next) => {
           return res.status(200).json({
             userId: user.id,
             isAdmin: user.isAdmin,
-            token: jwt.sign({
-                userId: user.id
-              },
-
-              process.env.JWT, {
-                expiresIn: '24h'
-              }
-            )
+            token: jwtUtils.generateToken(user)
           });
         })
         .catch(error => res.status(500).json({
@@ -99,17 +93,21 @@ exports.getOneUser = (req, res, next) => {
   const User = models.User;
 
   User.findOne({
-    where:{
-      id: req.params.id}
-    
+    where: {
+      id: req.params.id
+    }
+
   }).then(
     (user) => {
-      if (req.userId == req.params.id || req.isAdmin == 1){
-      res.status(200).json(user);
-    }}
+      if ((req.userId == req.params.id) || req.userRole === 1) {
+        return res.status(200).json(user);
+      } else {
+        return res.status(403).json("");
+      }
+    }
   ).catch(
     (error) => {
-      res.status(404).json({
+      return res.status(400).json({
         error: error
       });
     }
@@ -144,7 +142,7 @@ exports.deleteUser = (req, res, next) => {
       }
     })
     .then((user) => {
-      if (req.userId == req.params.id || req.isAdmin == 1) {
+      if (req.userId == req.params.id || req.userRole === 1) {
         user.destroy()
           .then(() => res.status(200).json({
             message: 'Utilisateur supprimé'
@@ -176,13 +174,13 @@ exports.modifyUser = (req, res, next) => {
       id: req.params.id
     }
   }).then((user) => {
-    if (req.userId == req.params.id || req.isAdmin == 1){
+    if (req.userId == req.params.id || req.userRole === 1) {
 
-    user.firstName = userObject.user.firstName;
-    user.surname = userObject.user.surname;
-    user.photo = userObject.user.photo;
-    user.bio = userObject.user.bio;
-  }
+      user.firstName = userObject.user.firstName;
+      user.surname = userObject.user.surname;
+      user.photo = userObject.user.photo;
+      user.bio = userObject.user.bio;
+    }
     user.save()
       .then(() => res.status(200).json({
         user: user

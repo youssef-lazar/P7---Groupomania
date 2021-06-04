@@ -18,7 +18,7 @@ class UserService {
         return api.put( '/user/' + id , data, { headers: auth() })
     }
     deleteUser(id) {
-        return api.delete('/user/' + id, { headers: auth(), data: { userId: id }});
+        return api.delete('/user/' + id, { headers: auth() });
     }
 }
 export default new UserService();

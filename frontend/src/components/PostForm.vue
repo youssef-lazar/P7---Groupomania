@@ -51,7 +51,7 @@
         newPost.append("image", this.post.imageUrl, this.post.imageUrl.filename);
 
         PostService.createPost(newPost).then(() => {
-          this.$router.push("/");
+          this.$router.go();
         });
         return true;
         
