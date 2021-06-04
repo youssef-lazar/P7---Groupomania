@@ -24,22 +24,10 @@
                 <div class="headerPost">
 
                     <!-- post username -->
-
+                    <p>{{ post.User.firstName }} {{ post.User.surname }}</p>
                     <!-- post créée le ... -->
-                    <p> {{post.createdAt.slice(0,10).split('-').reverse().join('/') + ' à ' + post.createdAt.slice(11,16)}}
+                    <p>{{post.createdAt.slice(0,10).split('-').reverse().join('/') + ' à ' + post.createdAt.slice(11,16)}}
                     </p>
-                </div>
-
-                <hr>
-
-                <!-- si l'utilisateur est admin alors afficher -->
-                <div class="d-flex justify-content-end" v-if="admin()">
-
-                    <!-- lien pour modifier le post en tant qu'admin  -->
-                    <a :href="'#/post/update/'+post.id">
-                        <b-icon id="AdminUpdatepost" icon="pencil-fill"></b-icon>
-                    </a>
-
                 </div>
 
                 <!-- contenu du post -->
@@ -49,23 +37,41 @@
                 <img :src="post.imageUrl" class="rounded img-fluid d-flex ml-auto mr-auto " id="imgResponsive"
                     alt="Responsive image" accept="image/*">
 
+                <button v-if="post.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1"
+                    @click="edit(post)"><i class="fa fa-edit fa"></i></button>
+                <button v-if="post.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1"
+                    @click="deletePost(post)"><i class="fa fa-trash fa"></i></button>
+
             </b-card>
         </div>
-
     </div>
 
 </template>
 
 <script>
-    import { mapState } from "vuex";
+    import PostService from "../services/post";
+    import { mapState, mapGetters } from "vuex";
 
     export default {
         name: "Wall",
-        data() {
+        props: {
+            id: {
+                type: Number,
+                default: null,
+                required: false
+            }
+        },
+    data() {
             return {}
         },
 
         computed: {
+            ...mapGetters(['currentUser']),
+
+            isAdmin() { // nous permet de savoir si l'utilisateur est un admin grâce aux infos présente dans le store
+                return this.$store.getters.isAdmin
+            },
+
             ...mapState({
                 posts: "posts",
             })
@@ -75,12 +81,28 @@
         },
 
         methods: {
-            // méthode pour verifier si l'utilisateur est admin
-            admin() {
-                if (localStorage.getItem('isAdmin') == "1") {
-                    return true
-                } else if (localStorage.getItem('isAdmin') == "0") {
-                    return false
+            async edit(post) {
+                this.$router.push('/modify-post/' + post.id)
+            },
+
+            /*deletePost(post, UserId) {
+                PostService.deletePost(post.id, {
+                    UserId: UserId,
+                }).then((res) => {
+                    console.log(res.data.message);
+                    this.$store.dispatch("getAllPosts");
+                })
+            }*/
+
+            async deletePost(post) {
+                if (confirm("Souhaitez-vous supprimer ce post?")) {
+                    try {
+                        await PostService.deletePost(post.id)
+                        alert("Le post a bien été supprimé")
+                        this.$store.dispatch("getAllPosts");
+                    } catch (error) {
+                        // TODO  QUOI FAIRE ??
+                    }
                 }
             },
 

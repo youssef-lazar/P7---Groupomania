@@ -19,7 +19,7 @@ module.exports = (sequelize, Datatypes) => {
     Post.associate = (models) => {
         Post.belongsTo(models.User, {
             foreignKey: {
-                allowNull: false
+                allowNull: true
             }, onDelete: 'CASCADE'
         })
         Post.hasMany(models.Like)

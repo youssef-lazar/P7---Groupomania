@@ -18,7 +18,7 @@ Vue.config.productionTip = false
 
 const axiosInstance = axios.create({
   headers: {
-      Authorization: 'Bearer '+ sessionStorage.getItem('jwt'),
+      Authorization: 'Bearer '+ localStorage.getItem('jwt'),
       'Content-Type': 'application/json'
   }
 });

@@ -11,8 +11,11 @@ class PostService {
     createPost(data) {
         return api.post('/posts/', data, { headers: auth() })
     }
-    deletePost(postId, data) {
-        return api.delete('/posts/' + postId, { headers: auth(), data: data })
+    modifyPost(id, data) {
+        return api.put( '/posts/' + id , data, { headers: auth() })
+    }
+    deletePost(id) {
+        return api.delete('/posts/' + id, { headers: auth() })
     }
 }
 export default new PostService();

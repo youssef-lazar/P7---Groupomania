@@ -41,10 +41,11 @@
 
 <script>
     import { mapActions, mapState } from 'vuex';
-    
+    import UserService from "../services/user.js"
+
     // TODO en props de ce component tu dois avoir userID
     export default {
-        name: 'Home',
+        name: 'ModifyProfilForm',
         props: {
             userId: {
                 type: Number,
@@ -63,11 +64,9 @@
         },
 
         async mounted() {
-            if (this.currentUser) {
-                this.user = await this.$store.dispatch("getOneUser", {
-                    id: this.currentUser.userId
-                })
-            }
+            const response = await UserService.getOneUser(
+            this.userId  || this.currentUser.userId)
+            this.user = response.data;
         },
 
         methods: {
@@ -75,14 +74,14 @@
 
             // requête pour modifier les informations du compte
             async saveModify() {
-                console.log(this.user)
+
                 await this.modifyUser(this.user)
                 alert("Votre profil a bien été modifié")
-                this.$router.push('/Profil')
+                this.$router.go(-1)
             },
 
             async cancel() {
-                this.$router.push('/Profil')
+                this.$router.go(-1)
             },
         }
     }

@@ -6,6 +6,7 @@ import Login from '../views/Login.vue'
 import MyProfil from '../views/MyProfil'
 import ModifyProfilForm from '../components/ModifyProfilForm'
 import AllProfils from '../components/AllProfils'
+import ModifyPost from '../components/ModifyPost'
 
 
 
@@ -43,14 +44,21 @@ Vue.use(VueRouter)
     component: MyProfil,
   },
     {
-    path: '/modify-profil',
+    path: '/modify-profil/:id',
     name: 'ModifyProfilForm',
     component: ModifyProfilForm,
+    props: route => ({ userId: Number(route.params.id) } )
   },
     {
     path: '/all-profils',
     name: 'AllProfils',
     component: AllProfils,
+  },
+    {
+    path: '/modify-post/:id',
+    name: 'ModifyPost',
+    component: ModifyPost,
+    props: route => ({ postId: Number(route.params.id) } )
   },
  
 ]
