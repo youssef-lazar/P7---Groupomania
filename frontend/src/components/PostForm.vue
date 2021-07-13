@@ -8,7 +8,7 @@
 
       <!-- contenu texte du post  -->
       <section>
-        <textarea class="form-control" id="text-password" rows="6" placeholder="Écrivez votre premier message !"
+        <textarea class="form-control" id="text" rows="6" placeholder="Écrivez votre premier message !"
           v-model="post.text" required>
           </textarea>
       </section>
@@ -25,7 +25,6 @@
       <b-button type="submit" variant="outline-primary">Partager</b-button>
 
     </b-form>
-
   </b-card>
 
 </template>

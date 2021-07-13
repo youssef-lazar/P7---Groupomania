@@ -3,6 +3,7 @@ const bodyParser = require('body-parser'); // Useful to transform requests body 
 const model = require('./models/index');
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
+const commentRoutes = require('./routes/comment');
 const path = require('path');
 
 const app = express();
@@ -29,6 +30,7 @@ app.use(bodyParser.json());
 
 app.use('/api/posts', postRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/comment', commentRoutes);
 
 
 module.exports = app;

@@ -1,11 +1,12 @@
 <template>
 
-    <body id="SignupForm">
-        <div class="container">
-            <h1 class="form-heading">Inscription</h1>
-            <div class="login-form">
-                <div class="main-div">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-lg-6 col-md-4 col-sm-4">
 
+                <h1 class="form-heading">Inscription</h1>
+
+                <div class="signup-form">
                     <form @submit.prevent="submitForm" id="Login">
 
                         <div class="form-group">
@@ -28,17 +29,26 @@
                                 minlength="6" placeholder="Mot de passe" required />
                         </div>
 
+                        <div class="form-group">
+                            <input class="form-control" v-model="passwordConfirm" type="password" name="passwordConfirm"
+                                id="passwordConfirm" minlength="6" placeholder="Réécrivez votre mot de passe"
+                                required />
+                        </div>
+
                         <button value="Connexion" class="btn btn-primary">Connexion</button>
 
                     </form>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
+    import {
+        mapActions
+    } from 'vuex';
 
     export default {
         name: "Signup",
@@ -48,6 +58,7 @@
                 surname: "",
                 email: "",
                 password: "",
+                passwordConfirm: "",
             };
         },
         props: {},
@@ -56,7 +67,9 @@
 
             async submitForm() {
                 try {
-                    await this.signup({
+                    if (this.password !== this.passwordConfirm) {
+                        alert('Les mots de passe saisis ne sont pas identiques !')
+                    } else await this.signup({
                         firstName: this.firstName,
                         surname: this.surname,
                         email: this.email,
@@ -75,16 +88,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
     @import '../assets/scss/_mixins.scss';
-
-    #SignupForm {
-        margin: 0;
-        padding: 100px;
-        background: url("../assets/fond.jpg") no-repeat center fixed;
-        -webkit-background-size: cover;
-        /* pour anciens Chrome et Safari */
-        background-size: cover;
-        /* version standardisée */
-    }
 
     .button {
         @include button-connect;

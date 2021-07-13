@@ -1,29 +1,36 @@
 <template>
-<body>
+
     <div class="profile">
-        <main>
-            <div v-if="user" id="profile">
-                <h3>Bonjour <span>{{ user.firstName }}</span>, ravi de vous revoir !</h3>
-                <p>{{ user.photo }}</p>
-                <div id="profile_informations">
-                    <p>Vous êtes parmis nous depuis le :</p>
-                    <p>{{ user.createdAt.slice(0,10).split('-').reverse().join('/')}}</p>
-                    <p>Votre Prénom: {{ user.firstName }}</p>
-                    <p>Votre Nom: {{ user.surname }}</p>
-                    <p>Votre Bio: {{ user.bio }}</p>
-                </div>
+        <b-container class="container">
+            <b-row align-h="center">
+                <b-col cols="12" md="4" sm="4" class="main">
+                    <div v-if="user" id="profile">
+                        <h3>Bonjour <span>{{ user.firstName }}</span>, ravi de vous revoir !</h3>
+                        <p>{{ user.photo }}</p>
+                        <div id="profile_informations">
+                            <p>Vous êtes parmis nous depuis le :</p>
+                            <p>{{ user.createdAt.slice(0,10).split('-').reverse().join('/')}}</p>
+                            <p>Votre Prénom: {{ user.firstName }}</p>
+                            <p>Votre Nom: {{ user.surname }}</p>
+                            <p>Votre Bio: {{ user.bio }}</p>
+                        </div>
 
-                <button @click="edit">Modifier mon compte</button>
+                        <button @click="edit">Modifier mon compte</button>
 
-                <button type="button" @click="deleteProfil">Supprimer mon compte</button>
-            </div>
-        </main>
+                        <button type="button" @click="deleteProfil">Supprimer mon compte</button>
+                    </div>
+                </b-col>
+            </b-row>
+        </b-container>
     </div>
-</body>
+
 </template>
 
 <script>
-    import { mapState, mapActions  } from "vuex";
+    import {
+        mapState,
+        mapActions
+    } from "vuex";
 
     export default {
         name: 'Profil',
@@ -40,7 +47,8 @@
         async mounted() {
             if (this.currentUser) {
                 this.user = await this.$store.dispatch("getOneUser", {
-                    id: this.currentUser.userId })
+                    id: this.currentUser.userId
+                })
             }
         },
 
@@ -49,11 +57,13 @@
 
             async deleteProfil() {
                 if (confirm("Souhaitez-vous supprimer votre compte?")) {
-                    try{
-                        
-                    await this.$store.dispatch('deleteUser', this.user)
+                    try {
+
+                        await this.$store.dispatch('deleteUser', {
+                            id: this.currentUser.userId
+                        })
                         this.$router.push("/signup");
-                    }catch(error){
+                    } catch (error) {
                         // TODO  QUOI FAIRE ??
                     }
                 }
@@ -74,7 +84,7 @@
     $secondary-grey: #424242;
     $primary-white: whitesmoke;
 
-    main {
+    .main {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -123,27 +133,6 @@
                 }
             }
 
-            #modal-confirmation {
-
-                #confirm,
-                #cancel {
-                    width: 100px;
-                    margin: 1% 4% 3% 4%;
-                }
-
-                #confirm {
-                    &:hover {
-                        transform: scale(1.01);
-                        color: #1F1F1F;
-                        background-color: #5CC150;
-                    }
-                }
-
-                p {
-                    font-weight: bold;
-                }
-            }
-
             button {
                 width: 250px;
                 padding: 1%;
@@ -157,13 +146,6 @@
             }
         }
     }
-    body {
-  margin:0;
-  padding:100px;
-  background: url("../assets/fond.jpg") no-repeat center fixed; 
-  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-  background-size: cover; /* version standardisée */
-}
 
     // RESPONSIVE
     @media screen and (min-width: 300px) and (max-width: 325px) {

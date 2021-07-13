@@ -7,6 +7,7 @@ import MyProfil from '../views/MyProfil'
 import ModifyProfilForm from '../components/ModifyProfilForm'
 import AllProfils from '../components/AllProfils'
 import ModifyPost from '../components/ModifyPost'
+import ModifyComment from '../components/ModifyComment'
 
 
 
@@ -59,6 +60,12 @@ Vue.use(VueRouter)
     name: 'ModifyPost',
     component: ModifyPost,
     props: route => ({ postId: Number(route.params.id) } )
+  },
+  {
+    path: '/modify-comment/:id',
+    name: 'ModifyComment',
+    component: ModifyComment,
+    props: route => ({ commentId: Number(route.params.id) } )
   },
  
 ]

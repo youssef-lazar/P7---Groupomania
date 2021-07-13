@@ -1,6 +1,6 @@
 <template>
 
-    <body>
+    <section>
         <h1 class="form-heading">Liste de tous les profils</h1>
 
         <div v-if="isAdmin" class="col-md-12 mx-auto mt-5">
@@ -21,7 +21,7 @@
             <h1> Vous n'avez pas accès à cette section!</h1>
 
         </div>
-    </body>
+    </section>
 </template>
 
 <script>
@@ -68,7 +68,7 @@
                 if (confirm("Souhaitez-vous supprimer ce compte?")) {
                     try {
                         await UserService.deleteUser(user.id)
-                        this.$router.push("/signup");
+                        this.$router.push("/");
                     } catch (error) {
                         console.log(error)
                     }
@@ -84,17 +84,6 @@
 </script>
 
 <style scoped lang="scss">
-    body {
-        background-image: url(/img/fond.6fed4a74.jpg);
-        background-size: cover;
-        background-repeat: no-repeat;
-        width: 100%;
-        height: auto;
-        position: absolute;
-        left: 0;
-        min-height: 100%;
-        min-width: 100%;
-    }
 
     .allCards {
         display: flex;
