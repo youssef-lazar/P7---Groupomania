@@ -146,9 +146,10 @@ const store = new Vuex.Store({
       }
     },
 
-    async deleteUser({id}) {
+    async deleteUser({ commit }, {id}) {
       try{
       const response = await UserService.deleteUser(id);
+      commit("removeCurrentUser", response.data);
         return response.data;
       }catch(error){
        throw new Error(error.message)
@@ -214,6 +215,16 @@ const store = new Vuex.Store({
         return response.data;
       }catch(error){
        throw new Error(error.message)
+      }
+    },
+
+    async modifyComment({ commit },{id,comment}) {
+      try{
+      const response = await PostService.modifyComment(id,comment);
+        commit(response.data);
+        return response.data;
+      }catch(error){
+        console.log(error.response);
       }
     },
 

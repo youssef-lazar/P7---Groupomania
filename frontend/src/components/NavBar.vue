@@ -92,7 +92,6 @@ import {mapActions, mapGetters} from 'vuex';
     nav {
         box-sizing: border-box;
         width: 100%;
-        height: 150px;
         margin: auto;
         position: relative;
         top: 0;
@@ -101,7 +100,7 @@ import {mapActions, mapGetters} from 'vuex';
         padding: 20px;
         justify-content: space-between;
         border-bottom: thin solid black;
-        background: url("../assets/navbar.png"); 
+        background: url("../assets/navbar2.png"); 
     }
 
     h1 {

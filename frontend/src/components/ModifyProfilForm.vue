@@ -1,7 +1,5 @@
 <template>
 
-    <body>
-
         <div class="modify-profil">
 
             <div>
@@ -34,8 +32,6 @@
 
             </form>
         </div>
-
-    </body>
 
 </template>
 
@@ -76,7 +72,7 @@
             async saveModify() {
 
                 await this.modifyUser(this.user)
-                alert("Votre profil a bien été modifié")
+                alert("Le profil a bien été modifié")
                 this.$router.go(-1)
             },
 

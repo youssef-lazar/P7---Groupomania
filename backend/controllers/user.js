@@ -164,7 +164,6 @@ exports.modifyUser = (req, res, next) => {
 
   const userObject = req.file ? {
     ...JSON.parse(req.body.user),
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   } : {
     ...req.body
   };
