@@ -1,6 +1,5 @@
 <template>
 
-  <body>
     <div class="home" v-if="disconnected()">
       <h1> Groupomania </h1>
 
@@ -18,7 +17,7 @@
       <PostForm msg="posts" />
       <PostList />
     </div>
-  </body>
+
 
 </template>
 
@@ -56,7 +55,6 @@
 
   .presentation {
     text-align: center;
-    max-width: 50%;
     margin-left: auto;
     margin-right: auto;
     font-size: 1.5em;

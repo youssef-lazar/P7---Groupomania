@@ -11,8 +11,14 @@ Vue.use(BootstrapVue);
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap.bundle'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import vuetify from './plugins/vuetify';
+
+
+
+// register jw pagination component globally
+import JWPagination from 'jw-vue-pagination';
+Vue.component('jw-pagination', JWPagination);
 
 Vue.config.productionTip = false
 
@@ -27,6 +33,6 @@ Vue.prototype.axios = axiosInstance
 new Vue({
   router,
   store,
-  vuetify,
+
   render: h => h(App)
 }).$mount('#app')

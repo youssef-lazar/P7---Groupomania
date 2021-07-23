@@ -1,97 +1,103 @@
 <template>
 
+    <div class="main">
 
-    <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="main col-lg-8 col-md-5 col-sm-3 ">
-
-                <div v-if="posts.length === 0">
-                    <div class="shadow mb-4 card">
-
-                        <h1> Aucun post pour le moment</h1>
-
-                    </div>
-                </div>
-
-                <div class="col-lg-8 col-md-5 col-sm-3">
-
-                    <!-- one-post -->
-                    <div tag="article" class="shadow mb-4 card" v-for="post in posts" :key="post.id">
-
-                        <!-- header -->
-                        <div class="headerPost">
-                            <!-- Auteur -->
-                            <p>{{ post.User.firstName }} {{ post.User.surname }}</p>
-                            <!-- post créée le ... -->
-                            <p>{{post.createdAt.slice(0,10).split('-').reverse().join('/') + ' à ' + post.createdAt.slice(11,16)}}
-                            </p>
+        <!--- \\\\\\\Post-->
+        <div class="card gedf-card" v-for="post in pageOfPosts" :key="post.id">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="ml-2">
+                            <div class="h5 m-0">{{ post.User.firstName }} {{ post.User.surname }}</div>
+                            <div class="h7 text-muted">{{ post.User.email }}</div>
                         </div>
-
-                        <!-- Contenu du post -->
-                        <p>{{post.text}}</p>
-
-                        <!-- Image du post -->
-                        <img :src="post.imageUrl" class="rounded img-fluid d-flex ml-auto mr-auto"
-                            alt="Responsive image" accept="image/*">
-
-
-                        <!-- Likes du post -->
-                        <div class="likes">
-                            <b-button @click="likePost(post)"><i class="like fa fa-heart"></i></b-button>
-                            <span class="like-number">{{ post.Likes.length }}</span>
-                        </div>
-
-
-                        <button
-                            v-if="post.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1"
-                            @click="edit(post)"><i class="fa fa-edit fa"></i></button>
-                            <button
-                                v-if="post.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1"
-                                @click="deletePost(post)"><i class="fa fa-trash fa"></i></button>
-
-                                <form method="POST" @submit.prevent="submitComment(post)">
-
-                                    <!-- contenu texte du commentaire  -->
-                                    <section>
-                                        <textarea class="form-control" id="comment" rows="1"
-                                            placeholder="Commentez le post !" v-model="comment.message"
-                                            required></textarea>
-                                    </section>
-
-                                    <hr>
-                                    <!-- bouton pour partager le commentaire -->
-                                    <button type="submit" variant="outline-primary">Commenter</button>
-
-                                </form>
-
-                                <!-- Commentaires du post -->
-                                <div v-for="comment in post.Comments" :key="comment.id">
-
-                                    <p>{{ comment.message }}</p>
-
-                                    <button
-                                        v-if="comment.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1"
-                                        @click="editComment(comment)"><i class="fa fa-edit fa"></i></button>
-                                        <button
-                                            v-if="comment.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1"
-                                            @click="deleteComment(comment)"><i class="fa fa-trash fa"></i></button>
-
-                                </div>
-
                     </div>
                 </div>
             </div>
+
+            <div class="card-body">
+                <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>Le
+                    {{post.createdAt.slice(0,10).split('-').reverse().join('/') + ' à ' + post.createdAt.slice(11,16)}}
+                </div>
+                <p class="card-text"> {{post.text}}</p>
+                <!-- Image du post -->
+                <img :src="post.imageUrl" class="rounded img-fluid d-flex ml-auto mr-auto" accept="image/*">
+            </div>
+
+            <div class="card-footer">
+                <div class="right-footer">
+                    <a class="card-link" @click="likePost(post)"><i class="fa fa-gittip"></i></a>
+                    <a class="card-link" @click="commentPost(post)"><i class="fa fa-comment"></i></a>
+                    <a class="card-link" v-if="post.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1" @click="edit(post)"><i class="fa fa-edit"></i></a>
+                    <a class="card-link" v-if="post.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1" @click="deletePost(post)"><i class="fa fa-trash"></i></a>
+                </div>
+
+                <div class="left-footer">
+                    <span class="like-number">{{ post.Likes.length }} Like(s)</span>
+                </div>
+            </div>
+            <!-- Post /////-->
+
+            <!--- \\\\\\\Comment Form
+            <form method="POST" @submit.prevent="submitComment(post)">
+                <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="comments-tab">
+
+                    <div class="form-group">
+                        <textarea class="form-control" rows="1" placeholder="Commenter la publication" v-model="comment.message" required></textarea>
+                    </div>
+
+                    <div class="btn-toolbar justify-content-between">
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-primary">Commenter</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+             Comment Form /////-->
+
+            <!--- \\\\\\\Comments-->
+            <div class="card gedf-card" v-for="comment in post.Comments" :key="comment.id">
+
+                <hr class="hr-text" data-content="COMMENTAIRES">
+
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="ml-2">
+                                <div class="h5 m-0">{{ comment.User.firstName }} {{ comment.User.surname }}</div>
+                                <div class="h7 text-muted">{{ comment.User.bio }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>Le
+                        {{comment.createdAt.slice(0,10).split('-').reverse().join('/') + ' à ' + comment.createdAt.slice(11,16)}}
+                    </div>
+                    <p class="card-text"> {{comment.message}}</p>
+                </div>
+
+                <div class="card-footer">
+                    <div class="right-footer">
+                        <a class="card-link" v-if="post.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1" @click="editComment(comment)"><i class="fa fa-edit"></i></a>
+                        <a class="card-link" v-if="post.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1" @click="deleteComment(comment)"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+                <!-- Comments /////-->
             </div>
         </div>
+
+        <div class="text-center text-lg-start text-muted">
+            <jw-pagination :items="posts" @changePage="onChangePage"></jw-pagination>
+        </div>
+    </div>
 
 </template>
 
 <script>
     import PostService from "../services/post";
-    import {
-        mapState,
-        mapGetters
-    } from "vuex";
+    import { mapState, mapGetters } from "vuex";
 
     export default {
         name: "Wall",
@@ -106,7 +112,8 @@
             return {
                 comment: {
                     message: "",
-                }
+                },
+                pageOfPosts: []
             }
         },
 
@@ -147,13 +154,8 @@
                 this.$store.dispatch("getAllPosts");
             },
 
-            submitComment(post) {
-                PostService.commentAPost(post.id, {
-                    comment: this.comment
-                }).then(() => {
-                    alert("Le commentaire a bien été ajouté")
-                    this.$router.go();
-                });
+            async commentPost(post) {
+                this.$router.push('/create-comment/' + post.id)
             },
 
             async editComment(comment) {
@@ -171,43 +173,88 @@
                     }
                 }
             },
+
+            onChangePage(pageOfPosts) {
+                // update page of items
+                this.pageOfPosts = pageOfPosts;
+            },
+
         }
     };
 </script>
 
-<style>
+<style lang="scss" scoped>
     .headerPost p {
         /** Titre h2 de chaque section  */
         font-size: 10px;
     }
 
-    .like-buttons {
-        display: flex;
+    .hr-text {
+        line-height: 1em;
+        position: relative;
+        outline: 0;
+        border: 0;
+        color: black;
+        text-align: center;
+        height: 1.5em;
+        opacity: .5;
 
-        i {
-            margin-right: 0.5em;
-            cursor: pointer;
+        &:before {
+            content: '';
+            background: linear-gradient(to right, transparent, #818078, transparent);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+        }
+
+        &:after {
+            content: attr(data-content);
+            position: relative;
+            display: inline-block;
+            color: black;
+            padding: 0 .5em;
+            line-height: 1.5em;
+            color: #818078;
+            background-color: #fcfcfa;
         }
     }
 
-    .likes,
-    .dislikes {
-        margin: 0 0.4em;
-    }
-
-    .img-fluid {
-        max-width: 500px;
-    }
-
-    .main {
-        justify-content: center;
+    .card-footer {
         display: flex;
+        justify-content: space-between;
     }
 
-    @media (max-width: 500px) {
-        .headerPost {
-            display: flex;
-            flex-direction: column;
-        }
+    .like-number {
+        color: #007bff;
+    }
+
+    .h7 {
+        font-size: 0.8rem;
+    }
+
+    .gedf-wrapper {
+        margin-top: 0.97rem;
+    }
+
+    #comments {
+        margin-top: 20px;
+    }
+
+    .gedf-main {
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+
+    .gedf-card {
+        margin-bottom: 2.77rem;
+        margin-top: 2.77rem;
+    }
+
+    /**Reset Bootstrap*/
+    .dropdown-toggle::after {
+        content: none;
+        display: none;
     }
 </style>

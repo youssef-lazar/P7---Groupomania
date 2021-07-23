@@ -6,7 +6,7 @@ exports.createPost = (req, res, next) => {
   const post = new models.Post({
     text: req.body.text,
     UserId: req.userId,
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` | null
   });
 
   post.save()
@@ -88,11 +88,16 @@ exports.deletePost = (req, res, next) => {
 exports.getOnePost = (req, res, next) => {
 
   const Post = models.Post;
+  const User = models.User;
 
   Post.findOne({
     where: {
       id: req.params.id
-    }
+    },
+    include: [{
+        model: User
+      },
+    ]
 
   }).then(
     (post) => {
@@ -115,8 +120,6 @@ exports.getAllPosts = (req, res, next) => {
   const Like = models.Like;
   const Comment = models.Comment;
 
-  // TODO gerer une pagination
-
   Post.findAll({
 
     order: [
@@ -129,7 +132,10 @@ exports.getAllPosts = (req, res, next) => {
         model: Like
       },
       {
-        model: Comment
+        model: Comment,
+        include: [{
+          model: User
+        }]
       },
     ]
   }).then(
@@ -188,94 +194,3 @@ exports.likePost = async (req, res, next) => {
   }
 
 }
-
-exports.addComment = (req, res, next) => {
-
-  const Comment = models.Comment;
-
-  const PostId = req.params.id;
-  const comment = req.body.comment;
-
-  Comment.create({
-      UserId: req.userId,
-      PostId: PostId,
-      message: comment.message
-
-    }).then(() => res.status(201).json({
-      message: "Votre commentaire a été publié"
-    }))
-    .catch(error => res.status(500).json({
-      error: "Problème de communication avec le serveur, veuillez réessayer et nous contacter si cela arrive de nouveau"
-    }))
-}
-
-
-exports.modifyComment = (req, res, next) => {
-
-  const Comment = models.Comment;
-
-  console.log(req.params)
-
-  const commentObject = req.body.comment;
-  Comment.findOne({
-    where: {
-      id: req.params.id
-    }
-  }).then((comment) => {
-    if (req.userId == req.params.id || req.userRole === 1) {
-      comment.message = commentObject.message;
-    }
-    comment.save()
-      .then((e) => {
-        res.status(200).json({
-          message: 'Commentaire modifié !'
-        })
-      })
-      .catch(error => res.status(400).json({
-        error
-      }));
-  });
-}
-
-
-/*exports.modifyComment = (req, res, next) => {
-    
-    const Comment = models.Comment;
-
-    const newComment = req.body.message;
-    const commentId = req.body.commentId;
-
-    //TODO Check right User
-    
-    Comment.update(
-        { message: newComment },
-        { where: { id: commentId } }
-    )
-        .then(response => {
-            if (response[0] > 0) {
-                res.status(200).json({ message: 'Commentaire mis à jour' });
-            } else {
-                res.status(400).json({ error: "Ce commentaire n'existe pas" });
-            }
-        })
-        .catch(error => res.status(500).json({ error: "Problème de communication avec le serveur, veuillez réessayer et nous contacter si cela arrive de nouveau" }));
-}*/
-
-
-exports.deleteComment = (req, res, next) => {
-
-    const Comment = models.Comment;
-
-    Comment.destroy({
-        where: { id: req.params.id }
-    })
-        .then(response => {
-            if (response > 0) {
-                console.log(response);
-                res.status(200).json({ message: "Le commentaire a été supprimé" });
-            } else {
-                res.status(400).json({ error: "Ce commentaire n'existe pas" });
-            }
-        })
-        .catch(error => res.status(500).json({ error: "Problème de communication avec le serveur, veuillez réessayer et nous contacter si cela arrive de nouveau" }))
-};

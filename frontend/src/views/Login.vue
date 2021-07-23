@@ -1,10 +1,6 @@
 <template>
 
-  <body>
-    <div class="login">
       <Login />
-    </div>
-  </body>
 
 </template>
 
