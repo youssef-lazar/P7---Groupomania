@@ -7,18 +7,18 @@ import MyProfil from '../views/MyProfil'
 import ModifyProfilForm from '../components/ModifyProfilForm'
 import AllProfils from '../components/AllProfils'
 import ModifyPost from '../components/ModifyPost'
+import CommentForm from '../components/CommentForm'
 import ModifyComment from '../components/ModifyComment'
 
 
 
 Vue.use(VueRouter)
 
-  const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'Home',
     component: Home,
-    meta: { 
+    meta: {
       requiresAuth: true
     }
   },
@@ -39,35 +39,49 @@ Vue.use(VueRouter)
       guest: true
     }
   },
-    {
+  {
     path: '/profil',
     name: 'profil',
     component: MyProfil,
   },
-    {
+  {
     path: '/modify-profil/:id',
     name: 'ModifyProfilForm',
     component: ModifyProfilForm,
-    props: route => ({ userId: Number(route.params.id) } )
+    props: route => ({
+      userId: Number(route.params.id)
+    })
   },
-    {
+  {
     path: '/all-profils',
     name: 'AllProfils',
     component: AllProfils,
   },
-    {
+  {
     path: '/modify-post/:id',
     name: 'ModifyPost',
     component: ModifyPost,
-    props: route => ({ postId: Number(route.params.id) } )
+    props: route => ({
+      postId: Number(route.params.id)
+    })
   },
   {
     path: '/modify-comment/:id',
     name: 'ModifyComment',
     component: ModifyComment,
-    props: route => ({ commentId: Number(route.params.id) } )
+    props: route => ({
+      commentId: Number(route.params.id)
+    })
   },
- 
+  {
+    path: '/create-comment/:id',
+    name: 'CommentForm',
+    component: CommentForm,
+    props: route => ({
+      postId: Number(route.params.id)
+    })
+  },
+
 ]
 
 const router = new VueRouter({

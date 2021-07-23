@@ -86,6 +86,9 @@ const store = new Vuex.Store({
     loggedIn(state) {
       return state.currentUser !== null;
     },
+    notLogged(state) {
+      return state.currentUser == null;
+    },
     isAdmin(state) {
       return state.currentUser.isAdmin != 0;
     },

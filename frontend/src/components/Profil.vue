@@ -1,36 +1,28 @@
 <template>
 
-    <div class="profile">
-        <b-container class="container">
-            <b-row align-h="center">
-                <b-col cols="12" md="4" sm="4" class="main">
-                    <div v-if="user" id="profile">
-                        <h3>Bonjour <span>{{ user.firstName }}</span>, ravi de vous revoir !</h3>
-                        <p>{{ user.photo }}</p>
-                        <div id="profile_informations">
-                            <p>Vous êtes parmis nous depuis le :</p>
-                            <p>{{ user.createdAt.slice(0,10).split('-').reverse().join('/')}}</p>
-                            <p>Votre Prénom: {{ user.firstName }}</p>
-                            <p>Votre Nom: {{ user.surname }}</p>
-                            <p>Votre Bio: {{ user.bio }}</p>
-                        </div>
+    <div class="card">
+        <div class="box" v-if="user">
 
-                        <button @click="edit">Modifier mon compte</button>
-
-                        <button type="button" @click="deleteProfil">Supprimer mon compte</button>
-                    </div>
-                </b-col>
-            </b-row>
-        </b-container>
+            <h2>Bonjour {{ user.firstName }}!</h2>
+            <h2 v-if="$store.state.currentUser.isAdmin === 1"><span>Vous êtes administrateur</span></h2>
+            <p>Vous êtes parmis nous depuis le :</p>
+            <p>{{ user.createdAt.slice(0,10).split('-').reverse().join('/')}}</p>
+            <p>Votre Prénom: {{ user.firstName }}</p>
+            <p>Votre Nom: {{ user.surname }}</p>
+            <p>Votre Bio: {{ user.bio }}</p>
+            <span>
+                <ul>
+                    <li><a @click="edit"><i class="fa fa-edit" aria-hidden="true"></i></a></li>
+                    <li><a @click="deleteProfil"><i class="fa fa-trash" aria-hidden="true"></i></a></li>
+                </ul>
+            </span>
+        </div>
     </div>
 
 </template>
 
 <script>
-    import {
-        mapState,
-        mapActions
-    } from "vuex";
+    import { mapState, mapActions } from "vuex";
 
     export default {
         name: 'Profil',
@@ -77,127 +69,91 @@
 </script>
 
 <style scoped lang="scss">
-    // Palette de couleurs
-    $primary-blue: #122442;
-    $text-danger: #d1515a;
-    $primary-grey: #aeaeaee0;
-    $secondary-grey: #424242;
-    $primary-white: whitesmoke;
-
-    .main {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        #profile {
-            text-align: center;
-            margin: 5%;
-            padding: 2%;
-            width: 600px;
-            background-color: #aeaeaee0;
-            border: 0.25px solid darken(#aeaeaee0, 5%);
-            border-radius: 5px;
-            box-shadow: 0px 0px 20px 0px rgba(72, 79, 88, 1);
-
-            h3 {
-                span {
-                    color: $primary-blue;
-                }
-            }
-
-            #profile_informations {
-                margin: 6%;
-                line-height: 0.9;
-
-                p {
-                    font-size: 120%;
-                }
-            }
-
-            button {
-                width: 200px;
-                border: 1px outset $primary-grey;
-                background-color: $primary-blue;
-                color: white;
-                border-radius: 10px;
-                padding: 2.7%;
-                font-size: 18px;
-                text-decoration: none;
-                text-align: center;
-                font-weight: bold;
-
-                &:hover {
-                    background: darken($primary-blue, 5%);
-                    transform: scale(1.01);
-                }
-            }
-
-            button {
-                width: 250px;
-                padding: 1%;
-                margin-bottom: 6%;
-                background-color: $primary-blue;
-
-                &:hover {
-                    transform: scale(1.05);
-                    background-color: darken($text-danger, 10%);
-                }
-            }
-        }
+    .card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        min-height: 400px;
+        background: #fff;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, .1);
+        border-radius: 10px;
+        transition: 0.5s;
     }
 
-    // RESPONSIVE
-    @media screen and (min-width: 300px) and (max-width: 325px) {
-        main {
-            #profile {
-                width: 280px;
-                margin: 10% 0 10% 0;
-            }
-        }
+    .card:hover {
+        box-shadow: 0 30px 70px rgba(0, 0, 0, .2);
     }
 
-    @media screen and (min-width: 326px) and (max-width: 400px) {
-        main {
-            #profile {
-                width: 300px;
-                margin: 10% 0 10% 0;
-            }
-        }
+    .card .box {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+        width: 100%;
     }
 
-    @media screen and (min-width: 401px) and (max-width: 425px) {
-        main {
-            #profile {
-                width: 340px;
-                margin: 10% 0 10% 0;
-            }
-        }
+    .card .box .img {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+        border-radius: 50%;
+        overflow: hidden;
     }
 
-    @media screen and (min-width: 426px) and (max-width: 500px) {
-        main {
-            #profile {
-                width: 400px;
-                margin: 5% 0 5% 0;
-            }
-        }
+    .card .box .img img {
+        width: 100%;
+        height: 100%;
     }
 
-    @media screen and (min-width: 501px) and (max-width: 525px) {
-        main {
-            #profile {
-                width: 450px;
-                margin: 5% 0 5% 0;
-            }
-        }
+    .card .box h2 {
+        font-size: 20px;
+        color: #262626;
+        margin: 20px auto;
     }
 
-    @media screen and (min-width: 526px) and (max-width: 600px) {
-        main {
-            #profile {
-                width: 490px;
-            }
-        }
+    .card .box h2 span {
+        font-size: 14px;
+        background: #0EA5E9;
+        color: #fff;
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 15px;
+    }
+
+    .card .box p {
+        color: #262626;
+    }
+
+    .card .box span {
+        display: inline-flex;
+    }
+
+    .card .box ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    .card .box ul li {
+        list-style: none;
+        float: left;
+    }
+
+    .card .box ul li a {
+        display: block;
+        color: #aaa;
+        margin: 0 10px;
+        font-size: 20px;
+        transition: 0.5s;
+        text-align: center;
+    }
+
+    .card .box ul li:hover a {
+        color: #0EA5E9;
+        transform: rotateY(360deg);
     }
 </style>

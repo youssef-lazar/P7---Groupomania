@@ -24,11 +24,9 @@
                     <textarea class="form-control" id="bio" rows="5" v-model="user.bio"></textarea>
                 </div>
 
-                <button type="button" class="btn btn-success" color="green" data-dismiss="modal"
-                    @click="saveModify()">Save</button>
+                <button type="button" class="btn btn-success" color="green" @click="saveModify()">Enregistrer</button>
 
-                <button type="button" class="btn btn-default" color="primary" data-dismiss="modal"
-                    @click="cancel">X</button>
+                <button type="button" class="btn btn-danger" color="red" @click="cancel">Annuler</button>
 
             </form>
         </div>

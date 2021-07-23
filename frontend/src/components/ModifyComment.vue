@@ -1,25 +1,31 @@
 <template>
 
-  <!-- card créer un post -->
-  <div  tag="article" class="col-md-5 mx-auto mt-4 container shadow card">
+  <div class="row justify-content-md-center">
+    <div class="col-lg-6 col-md-4 col-sm-4">
 
-    <!-- formulaire pour créer le post -->
-    <form method="POST" @submit.prevent.stop>
+      <h1 class="form-heading">Modifier le commentaire</h1>
 
-      <!-- contenu texte du post  -->
-      <section>
-        <textarea class="form-control" id="comment-message" rows="6" v-model="comment.message" required></textarea>
-      </section>
+      <div class="comment-form">
 
-      <hr>
+        <form method="POST" @submit.prevent.stop>
 
-      <!-- bouton pour enregistrer les modifications -->
-      <button type="button" class="btn btn-success" color="green" data-dismiss="modal" @click="saveModify">Enregistrer</button>
-      <button type="button" class="btn btn-success" color="red" data-dismiss="modal" @click="cancel">Annuler</button>
+          <!-- contenu texte du post  -->
+          <div>
+            <textarea class="form-control" id="comment-message" rows="6" v-model="comment.message" required></textarea>
+          </div>
 
-    </form>
+          <hr>
 
+          <!-- bouton pour enregistrer les modifications -->
+          <button type="button" class="btn btn-success" @click="saveModify">Enregistrer</button>
+          <button type="button" class="btn btn-danger" @click="cancel">Annuler</button>
+
+        </form>
+
+      </div>
+    </div>
   </div>
+
 
 </template>
 
@@ -34,7 +40,7 @@
         required: true
       }
     },
-    data:  () => {
+    data: () => {
       return {
         comment: {
           message: "",
@@ -52,7 +58,10 @@
       // requête pour modifier les informations du compte
       async saveModify() {
 
-        await this.modifyComment({id:this.commentId,comment: this.comment})
+        await this.modifyComment({
+          id: this.commentId,
+          comment: this.comment
+        })
         alert("Votre commentaire a bien été modifié")
         this.$router.push('/')
       },

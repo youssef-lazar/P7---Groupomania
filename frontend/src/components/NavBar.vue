@@ -1,66 +1,61 @@
 <template>
-    <nav v-if="loggedIn">
-        <div class="left-nav">
-            <ul>
-                <li>
-                    <a>
-                        <router-link to="/">Accueil</router-link>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <router-link to="/profil">Votre Profil </router-link>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <router-link v-if="isAdmin" to="/all-profils">Tous les profils </router-link>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="right-nav">
-            <ul>
-                <li>
-                    <a style="color:red;" @click="logoutHandler">
-                        Déconnexion
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    
 
-    <nav v-else>
-        <div class="left-nav">
-            <ul>
-                <li>
-                    <a>
-                        <router-link to="/">Accueil</router-link>
-                    </a>
+    <nav v-if="loggedIn" class="navbar navbar-expand-lg navbar-light navbar-fixed-top" role="navigation">
+
+        <router-link class="navbar-brand" to="/">Groupomania</router-link>
+
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Afficher/Masquer navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="navbarContent" class="navbar-collapse collapse">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/profil" >Mon profil </router-link>
                 </li>
-            </ul>
-        </div>
-        <div class="right-nav">
-            <ul>
-                <li>
-                    <a>
-                        <router-link to="/signup">Inscription </router-link>
-                    </a>
+
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/all-profils" v-if="isAdmin" >Tous les profils </router-link>
                 </li>
-                <li>
-                    <a>
-                        <router-link to="/login">Connexion </router-link>
-                    </a>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color:red;" @click="logoutHandler">Déconnexion</a>
                 </li>
+
             </ul>
         </div>
     </nav>
+
+   <nav v-else class="navbar navbar-expand-lg navbar-light navbar-fixed-top" role="navigation">
+
+        <router-link class="navbar-brand" to="/">Groupomania</router-link>
+
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Afficher/Masquer navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="navbarContent" class="navbar-collapse collapse">
+            <ul class="navbar-nav ml-auto ">
+
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/signup" >Inscription </router-link>
+                </li>
+
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/login" >Connexion </router-link>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+
 </template>
 
 <script>
-
-import {mapActions, mapGetters} from 'vuex';
+    import { mapActions, mapGetters } from 'vuex';
 
     export default {
         name: "Navbar",
@@ -73,15 +68,18 @@ import {mapActions, mapGetters} from 'vuex';
             },
             loggedIn() { // nous permet de savoir si l'utilisateur est connecté grâce au getter LoggedIn qui vient vérifier si l'utilisateur à bien un token
                 return this.$store.getters.loggedIn
+            },
+            notLogged() { // nous permet de savoir si l'utilisateur est connecté grâce au getter LoggedIn qui vient vérifier si l'utilisateur à bien un token
+                return this.$store.getters.notLogged
             }
         },
 
         methods: {
             ...mapActions(['logout']),
             logoutHandler() {
-            this.logout();
-            this.$router.push("/login");
-              
+                this.logout();
+                this.$router.push("/login");
+
             },
         }
 
@@ -89,68 +87,46 @@ import {mapActions, mapGetters} from 'vuex';
 </script>
 
 <style lang="scss" scoped>
-    nav {
-        box-sizing: border-box;
-        width: 100%;
-        margin: auto;
-        position: relative;
-        top: 0;
-        left: 0;
-        display: flex;
-        padding: 20px;
-        justify-content: space-between;
-        border-bottom: thin solid black;
-        background: url("../assets/navbar2.png"); 
-    }
-
-    h1 {
+    .navbar-brand {
         font-weight: 700;
-        font-size: 2.4em;
-        margin: 0;
     }
 
-    h5 {
-        font-size: 1.2em;
-        font-weight: 400;
-        margin: 0;
+    .navbar .navbar-brand,
+    .navbar .navbar-brand:hover {
+        color: #0EA5E9;
     }
 
-    .left-nav,
-    .right-nav {
-        align-self: center;
-        width: 30%;
+    .navbar {
+        border-color: transparent;
+        background-color: rgba(0, 0, 0, 0.5);
     }
 
-    .right-nav {
-        ul {
-            justify-content: flex-end;
-        }
+    .navbar .navbar-nav>.active>a,
+    .navbar .navbar-nav>.active>a:hover,
+    .navbar .navbar-nav>.active>a:focus {
+        color: #0EA5E9;
+        background-color: transparent;
     }
 
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
+    .navbar .navbar-nav>li>a {
+        color: #fff;
     }
 
-    li {
-        margin: 0 15px;
+    .navbar .navbar-nav>li>a:hover,
+    .navbar .navbar-nav>li>a:focus {
+        color: #0EA5E9;
     }
 
-    a {
-        color: white;
-        font-weight: 400;
-        text-decoration: none;
-        cursor: pointer;
-
-        &:hover {
-            text-decoration: underline;
-        }
+    .navbar .navbar-toggle {
+        border: none;
+        border-color: #fff;
     }
 
-    .active {
-        font-weight: 700;
-        text-decoration: underline;
+    .navbar .navbar-toggle:hover {
+        background: #666;
+    }
+
+    .navbar .navbar-toggle .icon-bar {
+        background-color: #fff;
     }
 </style>

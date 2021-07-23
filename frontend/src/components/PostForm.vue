@@ -1,31 +1,48 @@
 <template>
 
-  <!-- card créer un post -->
-  <b-card tag="article" class="col-md-5 mx-auto mt-4 container shadow">
+  <!--- \\\\\\\Post Form-->
+  <div class="card gedf-card">
 
-    <!-- formulaire pour créer le post -->
-    <b-form method="POST" @submit.prevent="submitForm" enctype="multipart/form-data">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts"
+            aria-selected="true">Créer une publication</a>
+        </li>
+      </ul>
+    </div>
 
-      <!-- contenu texte du post  -->
-      <section>
-        <textarea class="form-control" id="text" rows="6" placeholder="Écrivez votre premier message !"
-          v-model="post.text" required>
-          </textarea>
-      </section>
+    <div class="card-body">
+      <div class="tab-content" id="myTabContent">
 
-      <!-- image à charger -->
-      <div>
-        <b-form-file v-model="post.imageUrl" accept="image/*" class="mt-3"  id="file-input" plain></b-form-file>
+        <form method="POST" @submit.prevent="submitForm" enctype="multipart/form-data">
 
+          <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+
+            <div class="form-group" method="POST" @submit.prevent="submitForm" enctype="multipart/form-data">
+
+              <label class="sr-only" for="message">post</label>
+              <textarea class="form-control" id="message" rows="3" placeholder="A quoi pensez-vous?" v-model="post.text" required></textarea>
+
+              <div>
+                <b-form-file v-model="post.imageUrl" accept="image/*" class="mt-3" id="file-input" plain></b-form-file>
+              </div>
+
+            </div>
+
+
+            <div class="btn-toolbar justify-content-between">
+              <div class="btn-group">
+                <button type="submit" class="btn btn-primary">Partager</button>
+              </div>
+            </div>
+          </div>
+
+        </form>
       </div>
-
-      <hr>
-
-      <!-- bouton pour partager le post -->
-      <b-button type="submit" variant="outline-primary">Partager</b-button>
-
-    </b-form>
-  </b-card>
+    </div>
+  </div>
+    <!-- Post Form /////-->
 
 </template>
 
@@ -34,7 +51,7 @@
 
   export default {
     name: "createPost",
-    data: function() {
+    data: function () {
       return {
         post: {
           text: "",
@@ -53,8 +70,37 @@
           this.$router.go();
         });
         return true;
-        
+
       },
     }
   }
 </script>
+
+<style lang="scss" scoped>
+
+  .h7 {
+    font-size: 0.8rem;
+  }
+
+  .gedf-wrapper {
+    margin-top: 0.97rem;
+  }
+
+  @media (min-width: 992px) {
+    .gedf-main {
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
+
+    .gedf-card {
+      margin-top: 2.77rem;
+      margin-bottom: 2.77rem;
+    }
+  }
+
+  /**Reset Bootstrap*/
+  .dropdown-toggle::after {
+    content: none;
+    display: none;
+  }
+</style>
