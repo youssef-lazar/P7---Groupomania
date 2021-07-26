@@ -22,6 +22,12 @@ const store = new Vuex.Store({
   // Posts
 
     posts: [],
+    post: [],
+
+
+    // Comment
+
+    setComment: [],
 },
 
   mutations: {
@@ -77,6 +83,15 @@ const store = new Vuex.Store({
     state.posts = posts
     },
 
+    setPost(state, post) {
+    state.post = post
+    },
+
+    // comment
+    setComment(state, comment) {
+    state.comment = comment
+    },
+
   },
 
   getters: {
@@ -90,7 +105,7 @@ const store = new Vuex.Store({
       return state.currentUser == null;
     },
     isAdmin(state) {
-      return state.currentUser.isAdmin != 0;
+      return state.currentUser.isAdmin === 1;
     },
   }, 
 
@@ -187,10 +202,10 @@ const store = new Vuex.Store({
       commit(res.data);
     },
 
-    async getOnePost({commit},{id}) {
+    async getOnePost({ commit },{id}) {
       try{
       const response = await PostService.getOnePost(id);
-        commit("setPosts", response.data);
+        commit("setPost", response.data);
         return response.data;
       }catch(error){
         console.log(error.response);
@@ -218,6 +233,16 @@ const store = new Vuex.Store({
         return response.data;
       }catch(error){
        throw new Error(error.message)
+      }
+    },
+
+    async getOneComment({ commit },{id}) {
+      try{
+      const response = await PostService.getOneComment(id);
+        commit("setComment", response.data);
+        return response.data;
+      }catch(error){
+        console.log(error.response);
       }
     },
 

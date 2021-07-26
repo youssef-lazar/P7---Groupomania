@@ -9,6 +9,30 @@
 
         <form method="POST" @submit.prevent.stop>
 
+          <div class="card gedf-card comment-card">
+
+            <div class="card-header">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="mr-2">
+                    <img class="rounded-circle" width="45" :src="'https://robohash.org/'+ comment.UserId + '?set=set2'"
+                      alt="">
+                  </div>
+                  <div class="ml-2">
+                    <div class="h5 m-0">{{ comment.User.firstName }} {{ comment.User.surname }}</div>
+                    <div class="h7 text-muted">{{ comment.User.bio }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>Le
+                {{comment.createdAt.slice(0,10).split('-').reverse().join('/') + ' à ' + comment.createdAt.slice(11,16)}}
+              </div>
+            </div>
+          </div>
+
           <!-- contenu texte du post  -->
           <div>
             <textarea class="form-control" id="comment-message" rows="6" v-model="comment.message" required></textarea>
@@ -30,6 +54,7 @@
 </template>
 
 <script>
+  import PostService from "../services/post.js"
   import { mapActions } from 'vuex';
 
   export default {
@@ -50,6 +75,12 @@
 
     computed: {
 
+    },
+
+    async mounted() {
+      const id = this.commentId;
+      const response = await PostService.getOneComment(id)
+      this.comment = response.data;
     },
 
     methods: {

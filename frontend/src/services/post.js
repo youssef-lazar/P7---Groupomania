@@ -20,6 +20,9 @@ class PostService {
     likePost(id) {
         return api.post('/posts/' + id + '/like',{}, { headers: auth() })
     }
+    getOneComment(id) {
+        return api.get('/comment/' + id, { headers: auth() });
+    }
     commentAPost(id, data) {
         return api.post('/posts/' + id + '/comment', data, { headers: auth() })
     }

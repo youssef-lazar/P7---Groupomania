@@ -25,7 +25,7 @@
               <textarea class="form-control" id="message" rows="3" placeholder="A quoi pensez-vous?" v-model="post.text" required></textarea>
 
               <div>
-                <b-form-file v-model="post.imageUrl" accept="image/*" class="mt-3" id="file-input" plain></b-form-file>
+                <b-form-file v-model="post.imageUrl" accept="image/*" class="mt-3" id="file-input" plain required></b-form-file>
               </div>
 
             </div>

@@ -13,41 +13,58 @@ function isValid(email) {
   return errors;
 }
 
-exports.signup = (req, res, next) => {
+exports.signup = async (req, res, next) => {
 
   const User = models.User;
 
-  bcrypt.hash(req.body.password, 10)
-    .then(hash => {
-      const user = new User({
-        email: req.body.email,
-        firstName: req.body.firstName,
-        surname: req.body.surname,
-        password: hash
-      });
-
-      let errors = isValid(req.body.email);
-      if (errors.length > 0) {
-        return res.status(400).json({
-          errors
-        });
-      } else {
-
-        user.save()
-          .then(() => res.status(201).json({
-            message: 'Utilisateur créé !'
-          }))
-          .catch(error => res.status(400).json({
-            error
-          }));
+  try {
+    const existingUser = await User.findOne({
+      where: {
+        email: req.body.email
       }
-    })
-    .catch(error => res.status(500).json({
-      error
-    }));
+    });
+    if (existingUser) {
+      res.status(400).json({
+        error: "Cette adresse email est déjà utilisée"
+      });
+    } else {
+
+      bcrypt.hash(req.body.password, 10)
+        .then(hash => {
+          const user = new User({
+            email: req.body.email,
+            firstName: req.body.firstName,
+            surname: req.body.surname,
+            password: hash
+          });
+
+          let errors = isValid(req.body.email);
+
+          if (errors.length > 0) {
+            return res.status(400).json({
+              errors
+            });
+          } else {
+
+            user.save()
+              .then(() => res.status(201).json({
+                message: 'Utilisateur créé !'
+              }))
+              .catch(error => res.status(400).json({
+                error
+              }));
+          }
+        })
+        .catch(error => res.status(500).json({
+          error
+        }));
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: error.message
+    });
+  }
 };
-
-
 
 
 exports.login = (req, res, next) => {

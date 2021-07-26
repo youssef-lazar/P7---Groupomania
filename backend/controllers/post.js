@@ -1,3 +1,4 @@
+
 const fs = require('fs');
 const models = require('../models');
 
@@ -6,7 +7,7 @@ exports.createPost = (req, res, next) => {
   const post = new models.Post({
     text: req.body.text,
     UserId: req.userId,
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` | null
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   });
 
   post.save()
@@ -21,35 +22,23 @@ exports.createPost = (req, res, next) => {
 };
 
 
+// Modification de la publication sélectionnée
 exports.modifyPost = (req, res, next) => {
 
   const Post = models.Post;
 
-  const postObject = req.file ? {
-    ...JSON.parse(req.body.post),
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-  } : {
-    ...req.body
-  };
-  Post.findOne({
-    where: {
-      id: req.params.id
-    }
-  }).then((post) => {
-    if (req.userId == req.params.id || req.userRole === 1) {
-      post.text = postObject.post.text;
-      post.imageUrl = postObject.post.imageUrl;
-    }
-    post.save()
-      .then((e) => {
-        res.status(200).json({
-          message: 'Post modifié !'
-        })
-      })
-      .catch(error => res.status(400).json({
-        error
-      }));
-  });
+  Post.findOne({ attributes: ['id'], where: { id: req.params.id } })
+    .then(
+      Post.update({
+        text: req.body.text,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+      },
+        { where: { id: req.params.id } })
+        .then((response) => res.status(200).json({ response: " Publication modifiée avec succès !" }),
+      )
+        .catch((err) => res.status(401).json({ err }))
+    )
+    .catch(() => res.status(500).json({ 'error': 'unable to verify publication' }))
 };
 
 
@@ -68,9 +57,10 @@ exports.deletePost = (req, res, next) => {
         const filename = post.imageUrl.split('/images/')[1];
         fs.unlink(`images/${filename}`, () => {
           post.destroy({
-              id: req.params.id,
-            })
-            .then(() => res.status(200).json({
+              where: {
+                id: req.params.id
+              }
+            }).then(() => res.status(200).json({
               message: 'Post supprimé !'
             }))
             .catch(error => res.status(400).json({
@@ -95,9 +85,8 @@ exports.getOnePost = (req, res, next) => {
       id: req.params.id
     },
     include: [{
-        model: User
-      },
-    ]
+      model: User
+    },]
 
   }).then(
     (post) => {
