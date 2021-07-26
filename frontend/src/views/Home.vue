@@ -1,7 +1,7 @@
 <template>
 
     <div class="home" v-if="disconnected()">
-      <h1> Groupomania </h1>
+      <h1>  Forum Groupomania </h1>
 
       <div class="presentation">
         Bienvenue sur le réseau social interne conçu pour les employés de Groupomania. Le but de cet outil est de
@@ -50,7 +50,8 @@
   h1 {
     text-align: center;
     padding-bottom: 40px;
-    font-size: 3.5em;
+    font-size: 3.5em;text-shadow: 2px 2px 2px black;
+    color: white;
   }
 
   .presentation {

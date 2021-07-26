@@ -2,13 +2,23 @@
 
     <div class="main">
 
+        <div v-if="posts.length === 0">
+
+            <h1> Il n'y a aucun post pour le moment</h1>
+
+        </div>
+
         <!--- \\\\\\\Post-->
-        <div class="card gedf-card" v-for="post in pageOfPosts" :key="post.id">
+        <div class="card gedf-card post-card" v-for="post in pageOfPosts" :key="post.id">
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex justify-content-between align-items-center">
+                        <div class="mr-2">
+                            <img class="rounded-circle" width="45"
+                                :src="'https://robohash.org/'+post.User.id + '?set=set2'" alt="">
+                        </div>
                         <div class="ml-2">
-                            <div class="h5 m-0">{{ post.User.firstName }} {{ post.User.surname }}</div>
+                            <div class="h5 m-0"><img />{{ post.User.firstName }} {{ post.User.surname }}</div>
                             <div class="h7 text-muted">{{ post.User.email }}</div>
                         </div>
                     </div>
@@ -38,31 +48,18 @@
             </div>
             <!-- Post /////-->
 
-            <!--- \\\\\\\Comment Form
-            <form method="POST" @submit.prevent="submitComment(post)">
-                <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="comments-tab">
-
-                    <div class="form-group">
-                        <textarea class="form-control" rows="1" placeholder="Commenter la publication" v-model="comment.message" required></textarea>
-                    </div>
-
-                    <div class="btn-toolbar justify-content-between">
-                        <div class="btn-group">
-                            <button type="submit" class="btn btn-primary">Commenter</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-             Comment Form /////-->
+            <hr class="hr-text" data-content="COMMENTAIRES">
 
             <!--- \\\\\\\Comments-->
-            <div class="card gedf-card" v-for="comment in post.Comments" :key="comment.id">
-
-                <hr class="hr-text" data-content="COMMENTAIRES">
+            <div class="card gedf-card comment-card" v-for="comment in post.Comments" :key="comment.id">
 
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-2">
+                                <img class="rounded-circle" width="45"
+                                    :src="'https://robohash.org/'+ comment.UserId + '?set=set2'" alt="">
+                            </div>
                             <div class="ml-2">
                                 <div class="h5 m-0">{{ comment.User.firstName }} {{ comment.User.surname }}</div>
                                 <div class="h7 text-muted">{{ comment.User.bio }}</div>
@@ -80,8 +77,8 @@
 
                 <div class="card-footer">
                     <div class="right-footer">
-                        <a class="card-link" v-if="post.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1" @click="editComment(comment)"><i class="fa fa-edit"></i></a>
-                        <a class="card-link" v-if="post.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1" @click="deleteComment(comment)"><i class="fa fa-trash"></i></a>
+                        <a class="card-link" v-if="comment.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1" @click="editComment(comment)"><i class="fa fa-edit"></i></a>
+                        <a class="card-link" v-if="comment.UserId === $store.state.currentUser.userId || $store.state.currentUser.isAdmin === 1" @click="deleteComment(comment)"><i class="fa fa-trash"></i></a>
                     </div>
                 </div>
                 <!-- Comments /////-->
@@ -118,11 +115,7 @@
         },
 
         computed: {
-            ...mapGetters(['currentUser']),
-
-            isAdmin() { // nous permet de savoir si l'utilisateur est un admin grâce aux infos présente dans le store
-                return this.$store.getters.isAdmin
-            },
+            ...mapGetters(['currentUser', 'isAdmin']),
 
             ...mapState({
                 posts: "posts",
@@ -189,6 +182,13 @@
         font-size: 10px;
     }
 
+    h1 {
+        margin: 30px;
+        text-align: center;
+        text-shadow: 2px 2px 2px black;
+        color: white;
+    }
+
     .hr-text {
         line-height: 1em;
         position: relative;
@@ -250,6 +250,11 @@
     .gedf-card {
         margin-bottom: 2.77rem;
         margin-top: 2.77rem;
+    }
+
+    .comment-card {
+        margin-bottom: 0.1rem;
+        margin-top: 0.1rem;
     }
 
     /**Reset Bootstrap*/

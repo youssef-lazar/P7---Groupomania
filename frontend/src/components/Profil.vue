@@ -36,6 +36,7 @@
         computed: {
             ...mapState(["currentUser", "userDetails"])
         },
+        
         async mounted() {
             if (this.currentUser) {
                 this.user = await this.$store.dispatch("getOneUser", {

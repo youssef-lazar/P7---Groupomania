@@ -1,7 +1,7 @@
 <template>
     <!-- Team -->
     <section id="team" class="pb-5">
-        <h5 class="section-title h1">OUR TEAM</h5>
+        <h5 class="section-title h1">Liste des profils</h5>
         <div class="row" v-if="isAdmin">
             <!-- Team member -->
             <div class="col-xs-12 col-sm-6 col-md-4" v-for="user in users" :key="user.id">
@@ -10,6 +10,7 @@
                         <div class="frontside">
                             <div class="card">
                                 <div class="card-body text-center">
+                                    <p><img class=" img-fluid" :src="'https://robohash.org/'+user.id + '?set=set2'" alt="card image"></p>
                                     <h4 class="card-title">{{user.firstName}} {{user.surname}}</h4>
                                     <p class="card-text">{{user.bio}}</p>
                                 </div>
@@ -83,7 +84,7 @@
                 if (confirm("Souhaitez-vous supprimer ce compte?")) {
                     try {
                         await UserService.deleteUser(user.id)
-                        this.$router.push("/");
+                        this.$router.go();
                     } catch (error) {
                         console.log(error)
                     }

@@ -37,7 +37,6 @@
     import { mapActions, mapState } from 'vuex';
     import UserService from "../services/user.js"
 
-    // TODO en props de ce component tu dois avoir userID
     export default {
         name: 'ModifyProfilForm',
         props: {
@@ -80,3 +79,14 @@
         }
     }
 </script>
+
+<style scoped lang="scss">
+
+h1 {
+    margin: 30px;
+    text-align: center;
+    text-shadow: 2px 2px 2px black;
+    color: white;
+}
+
+</style>

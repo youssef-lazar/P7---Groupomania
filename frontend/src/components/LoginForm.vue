@@ -12,11 +12,13 @@
                             <input class="form-control" v-model="email" type="email" name="email" id="email" placeholder="Email" required />
                         </div>
 
+                        <span class="badAddress" v-show="badAddress"> Ce compte n'existe pas. </span><hr>
+
                         <div class="form-group">
                             <input class="form-control" v-model="password" type="password" name="password" id="password" minlength="6" placeholder="Mot de passe" required />
                         </div>
 
-                        <span class="isError" v-show="isError"> mot de passe incorrect </span>
+                        <span class="isError" v-show="isError"> Mot de passe incorrect! </span><hr>
 
                         <button value="Connexion" class="btn btn-primary">Connexion</button>
 
@@ -28,9 +30,7 @@
 </template>
 
 <script>
-    import {
-        mapActions
-    } from 'vuex';
+    import { mapActions } from 'vuex';
 
 
     export default {
@@ -40,9 +40,11 @@
                 email: "",
                 password: "",
                 isError: false,
+                badAddress: false,
+
             };
         },
-        props: {},
+        props: {}, 
         methods: {
             ...mapActions(['login']),
 
@@ -53,9 +55,11 @@
                         password: this.password
                     });
                     this.isError = false;
+                    this.badAddress = false;
                     this.$router.push('/')
                 } catch (err) {
                     this.isError = true;
+                    this.badAddress = true;
                 }
             },
         },
@@ -65,8 +69,15 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
-    .isError {
+    .isError, .badAddress {
         background-color: red;
         color: white;
     }
+
+    .form-heading {
+    margin: 30px;
+    text-align: center;
+    text-shadow: 2px 2px 2px black;
+    color: white;
+}
 </style>

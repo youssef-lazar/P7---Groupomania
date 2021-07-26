@@ -1,17 +1,15 @@
-<template>
+<template>  
+   <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" role="navigation">
 
-    <nav v-if="loggedIn" class="navbar navbar-expand-lg navbar-light navbar-fixed-top" role="navigation">
-
-        <router-link class="navbar-brand" to="/">Groupomania</router-link>
+        <router-link class="navbar-brand" to="/"><img class="nav-logo" src="../assets/icon-left-font-monochrome-white.png" alt="Responsive image" accept="image/*"></router-link>
 
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent"
             aria-controls="navbarContent" aria-expanded="false" aria-label="Afficher/Masquer navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div id="navbarContent" class="navbar-collapse collapse">
-            <ul class="navbar-nav ml-auto">
-
+        <div id="navbarContent" class="navbar-collapse collapse">            
+            <ul  v-if="loggedIn" class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <router-link class="nav-link" to="/profil" >Mon profil </router-link>
                 </li>
@@ -25,21 +23,7 @@
                 </li>
 
             </ul>
-        </div>
-    </nav>
-
-   <nav v-else class="navbar navbar-expand-lg navbar-light navbar-fixed-top" role="navigation">
-
-        <router-link class="navbar-brand" to="/">Groupomania</router-link>
-
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent"
-            aria-controls="navbarContent" aria-expanded="false" aria-label="Afficher/Masquer navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div id="navbarContent" class="navbar-collapse collapse">
-            <ul class="navbar-nav ml-auto ">
-
+            <ul v-else class="navbar-nav ml-auto ">
                 <li class="nav-item">
                     <router-link class="nav-link" to="/signup" >Inscription </router-link>
                 </li>
@@ -61,17 +45,7 @@
         name: "Navbar",
 
         computed: {
-            ...mapGetters(['currentUser']),
-
-            isAdmin() { // nous permet de savoir si l'utilisateur est un admin grâce aux infos présente dans le store
-                return this.$store.getters.isAdmin
-            },
-            loggedIn() { // nous permet de savoir si l'utilisateur est connecté grâce au getter LoggedIn qui vient vérifier si l'utilisateur à bien un token
-                return this.$store.getters.loggedIn
-            },
-            notLogged() { // nous permet de savoir si l'utilisateur est connecté grâce au getter LoggedIn qui vient vérifier si l'utilisateur à bien un token
-                return this.$store.getters.notLogged
-            }
+            ...mapGetters(['currentUser', 'loggedIn', 'isAdmin'])        
         },
 
         methods: {
