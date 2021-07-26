@@ -30,7 +30,7 @@ Télécharger le repository et suivez les instructions ci-après pour installer 
 
 ## Base de données MySQL
 
-1. **Créez la base de données MySQL 'groupomania' (encoded in utf8mb4_general_ci). Votre serveur MySQL doit fonctionner sur le port **3306**.
+1. Créez la base de données MySQL 'groupomania' (encoded in utf8mb4_general_ci). Votre serveur MySQL doit fonctionner sur le port **3306**.
 
 * Si vous souhaitez charger les données que j'ai prédéfinies : importez dans votre base de données 'groupomania' le dump data_groupomania.sql que vous trouverez dans le répertoire P7 - Groupomania du projet.
 
@@ -40,7 +40,7 @@ Télécharger le repository et suivez les instructions ci-après pour installer 
       * Un utilisateur nommé Samuel Guilleminot dont l'email est '**SamuelGuilleminot@groupomania.com**' and password is '**L4uX8vj4S**'
       * Un utilisateur nommé Gabrielle Plassard dont l'email est '**GabriellePlassard@groupomania.com**' and password is '**2F5bZ3dvN**'
 
-2. **Ajoutez un fichier de configuration nommé '.env'** à la racine du **backend**. Dans ce fichier, définissez 5 variables d'environnement secrètes :
+2. Ajoutez un fichier de configuration nommé '.env'** à la racine du **backend**. Dans ce fichier, définissez 5 variables d'environnement secrètes :
     * DB_NAME = 'groupomania'
     * DB_HOST = 'localhost'
     * DB_USER = '[db_user_name]'
@@ -48,19 +48,19 @@ Télécharger le repository et suivez les instructions ci-après pour installer 
     * TOKEN_KEY = '[random_string_to_encode_tokens]'
   
 
-3. **Installation et démarrage du Backend
+3. Installation et démarrage du Backend
 
 * Ouvrez votre terminal
 * Allez dans le dossier backend : `cd P7 - Groupomania\backend>` 
 * Installez toutes les dépendances du projet : `npm install`
 * Démarrez le serveur Node.js : `nodemon server`
 
-4. **Installation et démarrage du Frontend
+4. Installation et démarrage du Frontend
 
 * Ouvrez votre terminal
 * Allez dans le dossier frontend : `cd P7 - Groupomania\frontend>` 
 * Installez toutes les dépendances du projet : `npm install`
 * Démarrez l'application : `npm run serve`
 
-5. **Testez l'application
+5. Testez l'application
 * Ouvrez votre navigateur et allez sur : `http://localhost:8080/`
