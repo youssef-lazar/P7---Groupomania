@@ -64,5 +64,3 @@ Télécharger le repository et suivez les instructions ci-après pour installer 
 
 5. **Testez l'application
 * Ouvrez votre navigateur et allez sur : `http://localhost:8080/`
-
-
