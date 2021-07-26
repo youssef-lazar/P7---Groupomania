@@ -30,29 +30,39 @@ Télécharger le repository et suivez les instructions ci-après pour installer 
 
 ## Base de données MySQL
 
-* Ouvrez votre terminal
-* Connectez-vous à MySQL : `mysql -h localhost -u root -p`
-* Tapez votre mot de passe 
-* Créez la base de données : `CREATE DATABASE groupomania_database CHARACTER SET 'utf8';`
-* Utilisez la base de données créée : `USE groupomania_database`
-* Importez le fichier groupomania_database.sql : `SOURCE groupomania_database.sql;`
-* Dans le dossier backend, allez dans le fichier connectdb.js et renseignez votre mot de passe dans password:'xxxxxx'
+1. **Créez la base de données MySQL 'groupomania' (encoded in utf8mb4_general_ci). Votre serveur MySQL doit fonctionner sur le port **3306**.
 
-## Installation et démarrage du Backend
+* Si vous souhaitez charger les données que j'ai prédéfinies : importez dans votre base de données 'groupomania' le dump data_groupomania.sql que vous trouverez dans le répertoire P7 - Groupomania du projet.
+
+    Voici 3 comptes utilisateurs prédéfinis avec lesquels j'ai créé des posts et des commentaires:
+    
+      * Un **compte Admin** appelé Admin Admin dont l'email est '**GroupomaniaAdmin@groupomania.com**' et le mot de passe '**admin0000**'
+      * Un utilisateur nommé Samuel Guilleminot dont l'email est '**SamuelGuilleminot@groupomania.com**' and password is '**L4uX8vj4S**'
+      * Un utilisateur nommé Gabrielle Plassard dont l'email est '**GabriellePlassard@groupomania.com**' and password is '**2F5bZ3dvN**'
+
+2. **Ajoutez un fichier de configuration nommé '.env'** à la racine du **backend**. Dans ce fichier, définissez 5 variables d'environnement secrètes :
+    * DB_NAME = 'groupomania'
+    * DB_HOST = 'localhost'
+    * DB_USER = '[db_user_name]'
+    * DB_PASSWORD = '[db_user_password]'
+    * TOKEN_KEY = '[random_string_to_encode_tokens]'
+  
+
+3. **Installation et démarrage du Backend
 
 * Ouvrez votre terminal
 * Allez dans le dossier backend : `cd P7 - Groupomania\backend>` 
 * Installez toutes les dépendances du projet : `npm install`
 * Démarrez le serveur Node.js : `nodemon server`
 
-## Installation et démarrage du Frontend
+4. **Installation et démarrage du Frontend
 
 * Ouvrez votre terminal
 * Allez dans le dossier frontend : `cd P7 - Groupomania\frontend>` 
 * Installez toutes les dépendances du projet : `npm install`
 * Démarrez l'application : `npm run serve`
 
-## Testez l'application
+5. **Testez l'application
 * Ouvrez votre navigateur et allez sur : `http://localhost:8080/`
 
 
