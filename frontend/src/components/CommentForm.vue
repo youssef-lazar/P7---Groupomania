@@ -13,7 +13,8 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="mr-2">
                                     <img class="rounded-circle" width="45"
-                                        :src="'https://robohash.org/'+post.User.id + '?set=set2'" alt="">
+                                        :src="'https://avatars.dicebear.com/api/micah/'+ post.User.id + '.svg'"
+                                        alt="Avatar utilisateur">
                                 </div>
                                 <div class="ml-2">
                                     <div class="h5 m-0"><img />{{ post.User.firstName }} {{ post.User.surname }}</div>
@@ -29,7 +30,8 @@
                         </div>
                         <p class="card-text"> {{post.text}}</p>
                         <!-- Image du post -->
-                        <img :src="post.imageUrl" class="rounded img-fluid d-flex ml-auto mr-auto" accept="image/*">
+                        <img :src="post.imageUrl" class="rounded img-fluid d-flex ml-auto mr-auto" accept="image/*"
+                            alt="Contenu multimédia publication">
                     </div>
                 </div>
                 <!-- Post /////-->
@@ -50,6 +52,8 @@
                             <div class="btn-toolbar justify-content-between">
                                 <div class="btn-group">
                                     <button type="submit" class="btn btn-primary">Commenter</button>
+                                    <button class="btn btn-danger" color="red" data-dismiss="modal"
+                                        @click="cancel">Annuler</button>
                                 </div>
                             </div>
                         </div>
@@ -98,6 +102,10 @@
                 });
             },
 
+            async cancel() {
+                this.$router.push('/')
+            },
+
         }
     }
 </script>
@@ -108,5 +116,9 @@
         text-align: center;
         text-shadow: 2px 2px 2px black;
         color: white;
+    }
+
+    .text-muted {
+        color: black !important;
     }
 </style>

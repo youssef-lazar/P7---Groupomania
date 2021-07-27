@@ -9,18 +9,18 @@
 
         <form method="POST" @submit.prevent.stop>
 
-          <div class="card gedf-card comment-card">
+          <div class="card gedf-card comment-card" v-if="comment.id">
 
             <div class="card-header">
               <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="mr-2">
-                    <img class="rounded-circle" width="45" :src="'https://robohash.org/'+ comment.UserId + '?set=set2'"
-                      alt="">
+                    <img class="rounded-circle" width="45" :src="'https://avatars.dicebear.com/api/micah/'+ comment.UserId + '.svg'"
+                      alt="Avatar utilisateur">
                   </div>
                   <div class="ml-2">
                     <div class="h5 m-0">{{ comment.User.firstName }} {{ comment.User.surname }}</div>
-                    <div class="h7 text-muted">{{ comment.User.bio }}</div>
+                    <div class="h7 text-muted">{{ comment.User.email }}</div>
                   </div>
                 </div>
               </div>
@@ -68,6 +68,7 @@
     data: () => {
       return {
         comment: {
+          id: null,
           message: "",
         }
       }
@@ -103,3 +104,16 @@
     }
   }
 </script>
+
+<style scoped lang="scss">
+    .form-heading {
+        margin: 30px;
+        text-align: center;
+        text-shadow: 2px 2px 2px black;
+        color: white;
+    }
+
+    .text-muted {
+        color: black !important;
+    }
+</style>

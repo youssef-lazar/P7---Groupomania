@@ -1,7 +1,8 @@
 <template>
 
     <div class="home" v-if="disconnected()">
-      <h1>  Forum Groupomania </h1>
+      <img class="rounded img-fluid d-flex ml-auto mr-auto" src="../assets/icon-above-font.png" alt="Logo Groupomania" accept="image/*">
+      
 
       <div class="presentation">
         Bienvenue sur le réseau social interne conçu pour les employés de Groupomania. Le but de cet outil est de
@@ -46,13 +47,6 @@
 </script>
 
 <style scoped lang="scss">
-
-  h1 {
-    text-align: center;
-    padding-bottom: 40px;
-    font-size: 3.5em;text-shadow: 2px 2px 2px black;
-    color: white;
-  }
 
   .presentation {
     text-align: center;

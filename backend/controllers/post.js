@@ -1,4 +1,3 @@
-
 const fs = require('fs');
 const models = require('../models');
 
@@ -12,12 +11,12 @@ exports.createPost = (req, res, next) => {
 
   post.save()
     .then(() => res.status(201).json({
-      message: 'Post publié !'
+      message: 'Post publié !',
+      postId: post.id
     }))
     .catch(error => res.status(400).json({
       error
     }));
-
 
 };
 
@@ -27,18 +26,39 @@ exports.modifyPost = (req, res, next) => {
 
   const Post = models.Post;
 
-  Post.findOne({ attributes: ['id'], where: { id: req.params.id } })
-    .then(
-      Post.update({
-        text: req.body.text,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-      },
-        { where: { id: req.params.id } })
-        .then((response) => res.status(200).json({ response: " Publication modifiée avec succès !" }),
-      )
-        .catch((err) => res.status(401).json({ err }))
-    )
-    .catch(() => res.status(500).json({ 'error': 'unable to verify publication' }))
+  Post.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+    .then(post => {
+      if (req.userId == post.UserId || req.userRole === 1) {
+        const dataToUpdate = {
+          text: req.body.text
+        }
+        if (req.file) {
+          dataToUpdate.imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+        }
+        Post.update(dataToUpdate, {
+            where: {
+              id: req.params.id
+            }
+          })
+          .then((response) => res.status(200).json({
+            response: " Publication modifiée avec succès !"
+          }))
+          .catch((err) => res.status(401).json({
+            err
+          }))
+      } else {
+        return res.status(403).json({
+          'error': 'UnAuthorize'
+        });
+      }
+    })
+    .catch((error) => res.status(500).json({
+      error
+    }))
 };
 
 
@@ -52,7 +72,7 @@ exports.deletePost = (req, res, next) => {
       }
     })
     .then(post => {
-      if (req.userId == req.params.id || req.userRole === 1) {
+      if (req.userId == post.UserId || req.userRole === 1) {
 
         const filename = post.imageUrl.split('/images/')[1];
         fs.unlink(`images/${filename}`, () => {
@@ -86,7 +106,7 @@ exports.getOnePost = (req, res, next) => {
     },
     include: [{
       model: User
-    },]
+    }, ]
 
   }).then(
     (post) => {

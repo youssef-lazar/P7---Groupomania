@@ -10,7 +10,7 @@
                         <div class="frontside">
                             <div class="card">
                                 <div class="card-body text-center">
-                                    <p><img class=" img-fluid" :src="'https://robohash.org/'+user.id + '?set=set2'" alt="card image"></p>
+                                    <p><img class=" img-fluid" :src="'https://avatars.dicebear.com/api/micah/'+ user.id + '.svg'" alt="card avatar"></p>
                                     <h4 class="card-title">{{user.firstName}} {{user.surname}}</h4>
                                     <p class="card-text">{{user.bio}}</p>
                                 </div>
@@ -114,8 +114,8 @@
 
     .btn-primary {
         color: #fff;
-        background-color: #0EA5E9;
-        border-color: #0EA5E9;
+        background-color: #22427C;
+        border-color: #22427C;
     }
 
     section {
@@ -124,7 +124,7 @@
 
     section .section-title {
         text-align: center;
-        color: #0EA5E9;
+        color: #22427C;
         margin-bottom: 50px;
         text-transform: uppercase;
     }
@@ -213,12 +213,12 @@
 
     .backside .card a {
         font-size: 18px;
-        color: #0EA5E9 !important;
+        color: #22427C !important;
     }
 
     .frontside .card .card-title,
     .backside .card .card-title {
-        color: #0EA5E9 !important;
+        color: #22427C !important;
     }
 
     .frontside .card .card-body img {

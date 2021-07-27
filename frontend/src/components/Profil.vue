@@ -56,9 +56,7 @@
                             id: this.currentUser.userId
                         })
                         this.$router.push("/signup");
-                    } catch (error) {
-                        // TODO  QUOI FAIRE ??
-                    }
+                    } catch(error){console.log(error)}
                 }
             },
 
@@ -71,7 +69,7 @@
 
 <style scoped lang="scss">
     .card {
-        position: absolute;
+        position: relative;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -81,6 +79,7 @@
         box-shadow: 0 20px 50px rgba(0, 0, 0, .1);
         border-radius: 10px;
         transition: 0.5s;
+        margin-top: 250px;
     }
 
     .card:hover {

@@ -1,7 +1,7 @@
 <template>  
    <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" role="navigation">
 
-        <router-link class="navbar-brand" to="/"><img class="nav-logo" src="../assets/icon-left-font-monochrome-white.png" alt="Responsive image" accept="image/*"></router-link>
+        <router-link class="navbar-brand" to="/"><img class="nav-logo" src="../assets/icon-left-font-monochrome-white.png" alt="Logo Groupomania" accept="image/*"></router-link>
 
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent"
             aria-controls="navbarContent" aria-expanded="false" aria-label="Afficher/Masquer navigation">

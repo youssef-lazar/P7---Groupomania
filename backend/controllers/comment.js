@@ -33,7 +33,7 @@ exports.getOneComment = (req, res, next) => {
     },
     include: [{
       model: User
-    },]
+    }, ]
 
   }).then(
     (comment) => {
@@ -86,7 +86,6 @@ exports.deleteComment = (req, res, next) => {
     .then(response => {
       if (req.userId == comment.UserId || req.userRole === 1) {
         if (response > 0) {
-          console.log(response);
           res.status(200).json({
             message: "Le commentaire a été supprimé"
           });
