@@ -40,7 +40,7 @@ Télécharger le repository et suivez les instructions ci-après pour installer 
       * Un utilisateur nommé Samuel Guilleminot dont l'email est '**SamuelGuilleminot@groupomania.com**' et le mot de passe est '**L4uX8vj4S**'
       * Un utilisateur nommé Gabrielle Plassard dont l'email est '**GabriellePlassard@groupomania.com**' et le mot de passe est '**2F5bZ3dvN**'
 
-2. Ajoutez un fichier de configuration nommé '.env'** à la racine du **backend**. Dans ce fichier, définissez 5 variables d'environnement secrètes :
+2. Ajoutez un fichier de configuration nommé '.env' à la racine du **backend**. Dans ce fichier, définissez 5 variables d'environnement secrètes :
     * DB_NAME = 'groupomania'
     * DB_HOST = 'localhost'
     * DB_USER = '[db_user_name]'
