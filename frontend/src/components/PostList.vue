@@ -15,10 +15,10 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="mr-2">
                             <img class="rounded-circle" width="45"
-                                :src="'https://robohash.org/'+post.User.id + '?set=set2'" alt="">
+                                :src="'https://avatars.dicebear.com/api/micah/'+ post.User.id + '.svg'" alt="Avatar utilisateur">
                         </div>
                         <div class="ml-2">
-                            <div class="h5 m-0"><img />{{ post.User.firstName }} {{ post.User.surname }}</div>
+                            <div class="h5 m-0">{{ post.User.firstName }} {{ post.User.surname }}</div>
                             <div class="h7 text-muted">{{ post.User.email }}</div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                 </div>
                 <p class="card-text"> {{post.text}}</p>
                 <!-- Image du post -->
-                <img :src="post.imageUrl" class="rounded img-fluid d-flex ml-auto mr-auto" accept="image/*">
+                <img :src="post.imageUrl" class="rounded img-fluid d-flex ml-auto mr-auto" accept="image/*" alt="Contenu multimédia publication">
             </div>
 
             <div class="card-footer">
@@ -58,11 +58,11 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="mr-2">
                                 <img class="rounded-circle" width="45"
-                                    :src="'https://robohash.org/'+ comment.UserId + '?set=set2'" alt="">
+                                    :src="'https://avatars.dicebear.com/api/micah/'+ comment.UserId + '.svg'" alt="Avatar utilisateur">
                             </div>
                             <div class="ml-2">
                                 <div class="h5 m-0">{{ comment.User.firstName }} {{ comment.User.surname }}</div>
-                                <div class="h7 text-muted">{{ comment.User.bio }}</div>
+                                <div class="h7 text-muted">{{ comment.User.email }}</div>
                             </div>
                         </div>
                     </div>
@@ -136,9 +136,7 @@
                         await PostService.deletePost(post.id)
                         alert("Le post a bien été supprimé")
                         this.$store.dispatch("getAllPosts");
-                    } catch (error) {
-                        // TODO  QUOI FAIRE ??
-                    }
+                    } catch (error){console.log(error)}
                 }
             },
 
@@ -161,9 +159,7 @@
                         await PostService.deleteComment(comment.id)
                         alert("Le commentaire a bien été supprimé")
                         this.$store.dispatch("getAllPosts");
-                    } catch (error) {
-                        // TODO  QUOI FAIRE ??
-                    }
+                    } catch (error){console.log(error)}
                 }
             },
 
@@ -232,6 +228,10 @@
 
     .h7 {
         font-size: 0.8rem;
+    }
+
+    .text-muted {
+        color: black !important;
     }
 
     .gedf-wrapper {

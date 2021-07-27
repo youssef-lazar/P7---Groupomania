@@ -48,7 +48,10 @@ exports.signup = async (req, res, next) => {
 
             user.save()
               .then(() => res.status(201).json({
-                message: 'Utilisateur créé !'
+                message: 'Utilisateur créé !',
+                email: req.body.email,
+                firstName: req.body.firstName,
+                surname: req.body.surname,
               }))
               .catch(error => res.status(400).json({
                 error
@@ -92,7 +95,10 @@ exports.login = (req, res, next) => {
           return res.status(200).json({
             userId: user.id,
             isAdmin: user.isAdmin,
-            token: jwtUtils.generateToken(user)
+            token: jwtUtils.generateToken(user),
+            firstName: user.firstName,
+            surname: user.surname,
+            bio: user.bio
           });
         })
         .catch(error => res.status(500).json({
