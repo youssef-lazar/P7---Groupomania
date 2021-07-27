@@ -45,7 +45,7 @@ Télécharger le repository et suivez les instructions ci-après pour installer 
     * DB_HOST = 'localhost'
     * DB_USER = '[db_user_name]'
     * DB_PASSWORD = '[db_user_password]'
-    * TOKEN_KEY = '[random_string_to_encode_tokens]'
+    * JWT = '[random_string_to_encode_tokens]'
   
 
 3. Installation et démarrage du Backend
