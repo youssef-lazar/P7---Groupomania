@@ -36,9 +36,9 @@ Télécharger le repository et suivez les instructions ci-après pour installer 
 
     Voici 3 comptes utilisateurs prédéfinis avec lesquels j'ai créé des posts et des commentaires:
     
-      * Un **compte Admin** appelé Admin Admin dont l'email est '**GroupomaniaAdmin@groupomania.com**' et le mot de passe '**admin0000**'
-      * Un utilisateur nommé Samuel Guilleminot dont l'email est '**SamuelGuilleminot@groupomania.com**' and password is '**L4uX8vj4S**'
-      * Un utilisateur nommé Gabrielle Plassard dont l'email est '**GabriellePlassard@groupomania.com**' and password is '**2F5bZ3dvN**'
+      * Un **compte Admin** appelé Admin Admin dont l'email est '**GroupomaniaAdmin@groupomania.com**' et le mot de passe est '**admin0000**'
+      * Un utilisateur nommé Samuel Guilleminot dont l'email est '**SamuelGuilleminot@groupomania.com**' et le mot de passe est '**L4uX8vj4S**'
+      * Un utilisateur nommé Gabrielle Plassard dont l'email est '**GabriellePlassard@groupomania.com**' et le mot de passe est '**2F5bZ3dvN**'
 
 2. Ajoutez un fichier de configuration nommé '.env'** à la racine du **backend**. Dans ce fichier, définissez 5 variables d'environnement secrètes :
     * DB_NAME = 'groupomania'
