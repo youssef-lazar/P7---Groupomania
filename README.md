@@ -8,7 +8,7 @@
 * Le Framework [Express](https://expressjs.com/)
 * Une base de données MySQL
     * Les opérations de base de données sont effectuées via [Sequelize ORM](https://sequelize.org/)
-* Une API REST
+
 * Le framework frontend [Vue.js](https://vuejs.org/) with [Vuex](https://vuex.vuejs.org/)
 * Le framework frontend [Bootstrap](https://getbootstrap.com/) pour gérer le coté design et responsive
 
