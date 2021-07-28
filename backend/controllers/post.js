@@ -87,6 +87,10 @@ exports.deletePost = (req, res, next) => {
               error
             }));
         });
+      } else {
+        res.status(403).json({
+          'error': 'UnAuthorize'
+        })
       }
     })
     .catch(error => res.status(500).json({
