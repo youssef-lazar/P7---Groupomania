@@ -174,8 +174,8 @@ exports.deleteUser = (req, res, next) => {
             error
           }));
       } else {
-        res.status(400).json({
-          message: 'error'
+        res.status(403).json({
+          'error': 'UnAuthorize'
         })
       }
     })
@@ -202,6 +202,10 @@ exports.modifyUser = (req, res, next) => {
       user.surname = userObject.user.surname;
       user.photo = userObject.user.photo;
       user.bio = userObject.user.bio;
+    } else {
+      return res.status(403).json({
+        'error': 'UnAuthorize'
+      });
     }
     user.save()
       .then(() => res.status(200).json({
